@@ -6,7 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 const Splash = () => {
   return (
     <LinearGradient
-      colors={COLORS.gradients.bg}
+      colors={COLORS.gradients.background}
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
       style={styles.container}
