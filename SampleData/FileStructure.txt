@@ -1,0 +1,128 @@
+src
+│
+├── api
+│   ├── axios.js
+│   ├── authApi.js
+│   ├── jobApi.js
+│   └── userApi.js
+│
+├── assets
+│   ├── images
+│   ├── icons
+│   ├── fonts
+│   └── animations
+│
+├── components
+│   ├── common
+│   │   ├── Button
+│   │   ├── Input
+│   │   ├── Header
+│   │   ├── Loader
+│   │   └── EmptyState
+│   │
+│   ├── job
+│   ├── company
+│   └── user
+│
+├── constants
+│   ├── colors.js
+│   ├── fonts.js
+│   ├── images.js
+│   ├── apiConstants.js
+│   └── routes.js
+│
+├── hooks
+│   ├── useAuth.js
+│   ├── useJobs.js
+│   └── useDebounce.js
+│
+├── navigation
+│   ├── RootNavigator.js
+│   ├── AuthNavigator.js
+│   ├── UserNavigator.js
+│   ├── CompanyNavigator.js
+│   ├── BottomTabs.js
+│   └── DrawerNavigator.js
+│
+├── redux
+│   ├── store.js
+│   │
+│   ├── slices
+│   │   ├── authSlice.js
+│   │   ├── userSlice.js
+│   │   ├── companySlice.js
+│   │   ├── jobSlice.js
+│   │   └── notificationSlice.js
+│   │
+│   └── services
+│
+├── screens
+│   │
+│   ├── auth
+│   │   ├── LoginScreen.js
+│   │   ├── RegisterScreen.js
+│   │   ├── ForgotPasswordScreen.js
+│   │   └── OTPVerificationScreen.js
+│   │
+│   ├── user
+│   │   ├── Home
+│   │   ├── Jobs
+│   │   ├── JobDetails
+│   │   ├── Applications
+│   │   ├── SavedJobs
+│   │   ├── Profile
+│   │   ├── Notifications
+│   │   └── Settings
+│   │
+│   ├── company
+│   │   ├── dashboard
+│   │   ├── jobs
+│   │   ├── candidates
+│   │   ├── interviews
+│   │   ├── recruiters
+│   │   ├── analytics
+│   │   ├── settings
+│   │   └── profile
+│   │
+│   ├── recruiter
+│   │   ├── Dashboard
+│   │   ├── AssignedJobs
+│   │   ├── Candidates
+│   │   ├── ScheduleInterview
+│   │   └── Reports
+│   │
+│   ├── interviewer
+│   │   ├── Dashboard
+│   │   ├── Interviews
+│   │   ├── CandidateDetails
+│   │   ├── Feedback
+│   │   └── Reports
+│   │
+│   └── viewer
+│       ├── Dashboard
+│       ├── ViewJobs
+│       ├── ViewCandidates
+│       └── Reports
+│
+├── services
+│   ├── storage
+│   ├── notifications
+│   ├── permissions
+│   └── socket
+│
+├── utils
+│   ├── validation.js
+│   ├── helpers.js
+│   ├── dateFormatter.js
+│   └── toast.js
+│
+├── context
+│
+├── theme
+│   ├── index.js
+│   ├── light.js
+│   └── dark.js
+│
+├── localization
+│
+└── App.js
