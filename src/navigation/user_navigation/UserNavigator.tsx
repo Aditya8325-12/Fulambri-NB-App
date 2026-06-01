@@ -1,7 +1,7 @@
 import React from 'react';
-import BottomTabs from './BottomTabs';
+import DrawerNavigator from './DrawerNavigator';
 const UserNavigator = () => {
-  return <BottomTabs />;
+  return <DrawerNavigator />;
 };
 
 export default UserNavigator;

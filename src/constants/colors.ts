@@ -22,7 +22,7 @@ const COLORS = {
   textSecondary: '#1E3A8A',   // Slate-600 (Sub headings)
   textMuted: '#94A3B8',       // Slate-400 (Placeholder / disabled)
   textWhite: '#FFFFFF',
-  textNormal: '#334155',      // Slate-700 (Form inputs & text)
+  textNormal: '#49454F',      // Slate-700 (Form inputs & text)
 
   // Gray Scale
   gray100: '#F1F5F9',
@@ -49,6 +49,11 @@ const COLORS = {
     card: ['#FFFFFF', '#F8FAFC'],
     background: ['#EFF6FF', '#E0F2FE'],
   },
+
+
+
+  // new add 
+  Icon_Inactive: '#9E9E9E'
 };
 
 export default COLORS;

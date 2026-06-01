@@ -15,9 +15,13 @@ import COLORS from '../../constants/colors';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Checkbox from '../../components/common/Checkbox';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux';
+import { setLoggedIn } from '../../redux/fetatures/auth/authSlice';
+import { AppDispatch } from '../../redux/store';
 
 const LoginScreen = ({ navigation }: any) => {
+  const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -26,9 +30,15 @@ const LoginScreen = ({ navigation }: any) => {
   const { width } = useWindowDimensions();
   const isWide = width > 768;
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setLoading(true);
     console.log('Login Pressed with:', email, password, rememberMe);
+
+    if (email === "test@gmail.com" && password === "12345") {
+      await AsyncStorage.setItem("userData", "USER");
+      dispatch(setLoggedIn(true));
+    }
+
     setTimeout(() => {
       setLoading(false);
     }, 1500);

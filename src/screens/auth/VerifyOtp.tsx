@@ -7,7 +7,6 @@ import {
     ScrollView,
     ImageBackground,
     Image,
-    Alert,
 } from 'react-native';
 import React, { useState, useRef, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,7 +14,8 @@ import { OtpInput, OtpInputRef } from 'react-native-otp-entry';
 import TYPOGRAPHY from '../../theme/typography';
 import COLORS from '../../constants/colors';
 import Button from '../../components/common/Button';
-import FontAwesome6 from "react-native-vector-icons/FontAwesome6"
+import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import CommonDialog from '../../components/common/CommonDialog';
 
 const OTP_LENGTH = 6;
 const RESEND_COOLDOWN = 30; // seconds
@@ -27,6 +27,20 @@ const VerifyOtp = ({ route, navigation }: any) => {
     const [loading, setLoading] = useState(false);
     const [timer, setTimer] = useState(RESEND_COOLDOWN);
     const [canResend, setCanResend] = useState(false);
+
+    const [dialog, setDialog] = useState<{
+        visible: boolean;
+        title: string;
+        description: string;
+        onSave?: () => void | Promise<void | boolean> | boolean;
+        saveText?: string;
+        cancelText?: string;
+        hideFooter?: boolean;
+    }>({
+        visible: false,
+        title: '',
+        description: '',
+    });
 
     const otpRef = useRef<OtpInputRef>(null);
     const { width } = useWindowDimensions();
@@ -47,7 +61,13 @@ const VerifyOtp = ({ route, navigation }: any) => {
     const handleVerify = (code: string) => {
         const finalOtp = code || otp;
         if (finalOtp.length < OTP_LENGTH) {
-            Alert.alert('Invalid OTP', 'Please enter the complete 6-digit code.');
+            setDialog({
+                visible: true,
+                title: 'Invalid OTP',
+                description: 'Please enter the complete 6-digit code.',
+                saveText: 'OK',
+                hideFooter: true,
+            });
             return;
         }
         setLoading(true);
@@ -55,12 +75,16 @@ const VerifyOtp = ({ route, navigation }: any) => {
 
         setTimeout(() => {
             setLoading(false);
-            Alert.alert('Success', 'Your account has been verified!', [
-                {
-                    text: 'Continue',
-                    onPress: () => navigation?.navigate('Login'),
+            setDialog({
+                visible: true,
+                title: 'Success',
+                description: 'Your account has been verified!',
+                onSave: () => {
+                    navigation?.navigate('Login');
                 },
-            ]);
+                saveText: 'Continue',
+                hideFooter: true,
+            });
         }, 1500);
     };
 
@@ -72,7 +96,13 @@ const VerifyOtp = ({ route, navigation }: any) => {
         setCanResend(false);
         console.log('Resending OTP to:', data.email);
         // TODO: Replace with your resend OTP API call
-        Alert.alert('OTP Sent', `A new code has been sent to ${data.email}`);
+        setDialog({
+            visible: true,
+            title: 'OTP Sent',
+            description: `A new code has been sent to ${data.email}`,
+            saveText: 'OK',
+            hideFooter: true,
+        });
     };
 
     const renderInfoSection = () => (
@@ -178,6 +208,33 @@ const VerifyOtp = ({ route, navigation }: any) => {
                     {renderOtpCard()}
                 </View>
             </ScrollView>
+
+            <CommonDialog
+                open={dialog.visible}
+                onOpenChange={(visible) => setDialog(prev => ({ ...prev, visible }))}
+                title={dialog.title}
+                description={dialog.description}
+                hideFooter={dialog.hideFooter}
+                onSave={dialog.onSave}
+                saveText={dialog.saveText}
+                cancelText={dialog.cancelText}
+            >
+                {dialog.hideFooter && (
+                    <View style={{ marginTop: 12 }}>
+                        <Button
+                            variant="default"
+                            label={dialog.saveText || 'OK'}
+                            onPress={async () => {
+                                if (dialog.onSave) {
+                                    await dialog.onSave();
+                                }
+                                setDialog(prev => ({ ...prev, visible: false }));
+                            }}
+                            height={44}
+                        />
+                    </View>
+                )}
+            </CommonDialog>
         </SafeAreaView>
     );
 };
@@ -187,11 +244,12 @@ export default VerifyOtp;
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: '#F8FAFC',
+        // backgroundColor: '#F8FAFC',
+        backgroundColor: COLORS.danger,
     },
     scrollContent: {
         flexGrow: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         padding: 24,
     },
@@ -220,6 +278,8 @@ const styles = StyleSheet.create({
         maxWidth: 480,
         justifyContent: 'center',
         gap: 16,
+        paddingBottom: 20,
+        marginTop: 20,
     },
     headingRow: {
         flexDirection: 'row',
@@ -274,21 +334,24 @@ const styles = StyleSheet.create({
     // --- OTP Input Styles ---
     otpContainer: {
         gap: 10,
-        justifyContent: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',   // ✅ Add this
+        alignItems: 'center',   // ✅ Add this
     },
     otpBox: {
         width: 48,
-        height: 56,
-        borderRadius: 12,
+        height: 51,
+        borderRadius: 6,
         borderWidth: 1.5,
         borderColor: COLORS.border,
         backgroundColor: COLORS.white,
         justifyContent: 'center',
         alignItems: 'center',
+        // ✅ Remove any dynamic sizing — keep width/height fixed
     },
     otpBoxFocused: {
         borderColor: COLORS.primary,
-        borderWidth: 2,
+        borderWidth: 1.5,  // ✅ Keep same borderWidth as otpBox (no change in size)
         shadowColor: COLORS.primary,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.3,
@@ -296,7 +359,7 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
     otpText: {
-        ...TYPOGRAPHY.sectionHeading,
+        ...TYPOGRAPHY.cardHeading,
         color: COLORS.textNormal,
         textAlign: 'center',
     },

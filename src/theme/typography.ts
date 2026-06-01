@@ -47,7 +47,7 @@ const TYPOGRAPHY = {
     // Card Heading
     cardHeading: {
         fontSize: FONT_SIZE.xl,
-        fontFamily: FONT_FAMILY.PSemiBold,
+        fontFamily: FONT_FAMILY.PMedium,
         color: COLORS.textPrimary,
     },
 
