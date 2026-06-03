@@ -1,26 +1,27 @@
-import { Text, TouchableOpacity, View ,StyleSheet} from "react-native";
-import { FONT_FAMILY, FONT_SIZE } from "../../constants/fonts";
-import COLORS from "../../constants/colors";
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
+import COLORS from '../../constants/colors';
 
 export const SectionHeader = ({
   title,
   actionLabel,
+  onPress,
 }: {
   title: string;
   actionLabel?: string;
+  onPress?: () => void;
 }) => (
   <View style={styles.sectionHeader}>
     <Text style={styles.sectionTitle}>{title}</Text>
     {actionLabel && (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onPress}>
         <Text style={styles.sectionAction}>{actionLabel}</Text>
       </TouchableOpacity>
     )}
   </View>
 );
 
-
-const styles=StyleSheet.create({
+const styles = StyleSheet.create({
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -38,5 +39,4 @@ const styles=StyleSheet.create({
     fontSize: FONT_SIZE.sm,
     color: COLORS.secondary,
   },
-
-})
+});

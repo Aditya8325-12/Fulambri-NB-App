@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLORS.card,
-    borderRadius: 16,
+    borderRadius: 8,
     padding: 14,
     marginBottom: 12,
     borderWidth: 1,
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   recentIcon: {
     width: 44,
     height: 44,
-    borderRadius: 12,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },

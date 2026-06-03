@@ -1,6 +1,7 @@
 const COLORS = {
   // Brand Colors
   primary: '#2dd4bf',
+  miniPrimary: '#e1faf7ff',
 
   secondary: '#1e40af',
 
@@ -18,11 +19,11 @@ const COLORS = {
   borderLight: '#F1F5F9',
 
   // Text Colors
-  textPrimary: '#2dd4bf',     // Slate-900 (Main heading/labels)
-  textSecondary: '#1E3A8A',   // Slate-600 (Sub headings)
-  textMuted: '#94A3B8',       // Slate-400 (Placeholder / disabled)
+  textPrimary: '#2dd4bf', // Slate-900 (Main heading/labels)
+  textSecondary: '#1E3A8A', // Slate-600 (Sub headings)
+  textMuted: '#94A3B8', // Slate-400 (Placeholder / disabled)
   textWhite: '#FFFFFF',
-  textNormal: '#49454F',      // Slate-700 (Form inputs & text)
+  textNormal: '#49454F', // Slate-700 (Form inputs & text)
 
   // Gray Scale
   gray100: '#F1F5F9',
@@ -50,10 +51,8 @@ const COLORS = {
     background: ['#EFF6FF', '#E0F2FE'],
   },
 
-
-
-  // new add 
-  Icon_Inactive: '#9E9E9E'
+  // new add
+  Icon_Inactive: '#9E9E9E',
 };
 
 export default COLORS;

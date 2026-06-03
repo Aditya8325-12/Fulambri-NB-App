@@ -13,6 +13,8 @@ const CommonHeader = ({
   leftIcon,
   BellIcon,
   SearchBar,
+  Location,
+  Keyword,
 }: any) => {
   const navigation = useNavigation();
   return (
@@ -37,7 +39,11 @@ const CommonHeader = ({
           activeOpacity={0.8}
         >
           <Icon name="magnify" size={18} color="#999" />
-          <Text style={styles.searchText}>Search jobs...</Text>
+          <Text style={styles.searchText}>
+            {(Location && Location !== '') || (Keyword && Keyword !== '')
+              ? Keyword + ' , ' + Location
+              : 'Search jobs...'}{' '}
+          </Text>
           <Icon
             name="microphone-outline"
             size={18}

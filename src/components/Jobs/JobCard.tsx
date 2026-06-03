@@ -1,16 +1,9 @@
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
-import { JOB_LISTINGS } from '../../screens/user/Jobs';
+import { JOB_LISTINGS } from './SampleData/Data';
 import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
 import COLORS from '../../constants/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Button from '../common/Button';
 import LinearGradient from 'react-native-linear-gradient';
 
 const JobCard = ({ item }: { item: (typeof JOB_LISTINGS)[0] }) => {

@@ -5,9 +5,6 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  TextInput,
-  FlatList,
-  Dimensions,
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
@@ -18,107 +15,139 @@ import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
 import CommonHeader from '../../components/common/CommonHeader';
 import JobCard from '../../components/Jobs/JobCard';
 import Button from '../../components/common/Button';
+import {
+  JOB_LISTINGS,
+  SORT_OPTIONS,
+} from '../../components/Jobs/SampleData/Data';
+import SearchJobModal from '../../components/modals/SearchJobModal';
+import FilterJobModal, {
+  FilterState,
+} from '../../components/modals/FilterJobModal';
+import SearchJobTab from '../../components/Jobs/SearchJobTab';
 
-const { width } = Dimensions.get('window');
+const ResultsHeader = ({
+  TotalJobs,
+  cycleSort,
+  sortLabel,
+  onFilter,
+  appliedFilterCount,
+}: {
+  TotalJobs: number;
+  cycleSort: () => void;
+  sortLabel: string;
+  onFilter: () => void;
+  appliedFilterCount: number;
+}) => (
+  <View style={styles.resultsRow}>
+    <Text style={styles.resultsCount}>
+      {TotalJobs} {TotalJobs === 1 ? 'Job' : 'Jobs'} Found
+    </Text>
+    <View style={styles.resultsActions}>
+      <TouchableOpacity
+        onPress={cycleSort}
+        style={styles.sortBtn}
+        activeOpacity={0.8}
+      >
+        <Text style={styles.sortLabel}>
+          Sort by: <Text style={styles.sortValue}>{sortLabel}</Text>
+        </Text>
+        <Icon name="chevron-down" size={16} color={COLORS.secondary} />
+      </TouchableOpacity>
 
-// ─── Data ────────────────────────────────────────────────────────────────────
+      <TouchableOpacity
+        onPress={onFilter}
+        style={styles.filterIconBtn}
+        activeOpacity={0.8}
+      >
+        <Icon name="tune-variant" size={18} color={COLORS.primary} />
+        {appliedFilterCount > 0 && (
+          <View style={styles.filterBadge}>
+            <Text style={styles.filterBadgeText}>{appliedFilterCount}</Text>
+          </View>
+        )}
+      </TouchableOpacity>
+    </View>
+  </View>
+);
 
-const QUICK_CATEGORIES = [
-  { id: '1', label: 'Software Engineer', active: true },
-  { id: '2', label: 'Data Analyst', active: false },
-  { id: '3', label: 'Product Manager', active: false },
-  { id: '4', label: 'UI/UX Designer', active: false },
-  { id: '5', label: 'DevOps Engineer', active: false },
-];
+const CustomHeader = () => {
+  return (
+    <View style={styles.header}>
+      <View>
+        <Text style={styles.headerTitle}>Find Your Dream Job</Text>
+        <Text style={styles.headerSubtitle}>
+          Discover opportunities that match your skills
+        </Text>
+      </View>
+      <View style={styles.headerRight}>
+        <TouchableOpacity style={styles.headerIcon}>
+          <Icon name="bell-outline" size={22} color={COLORS.gray700} />
+          <View style={styles.notifDot} />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 
-const FILTER_CHIPS = [
-  { id: '1', icon: 'briefcase-outline', label: 'Experience' },
-  { id: '2', icon: 'currency-inr', label: 'Salary' },
-  { id: '3', icon: 'map-marker-outline', label: 'Location' },
-];
-
-const SORT_OPTIONS = ['Relevance', 'Latest', 'Salary'];
-
-export const JOB_LISTINGS = [
-  {
-    id: '1',
-    title: 'Senior React Native Developer',
-    company: 'TechNova Solutions',
-    companyColor: '#0F766E',
-    location: 'Pune, Maharashtra',
-    tags: ['Full Time', 'Remote', '3+ Years'],
-    tagColors: ['#EFF6FF', '#F0FDF4', '#FFF7ED'],
-    tagTextColors: ['#2563EB', '#16A34A', '#EA580C'],
-    description:
-      'Looking for an experienced React Native developer to build scalable mobile...',
-    salary: '₹8 - ₹15 LPA',
-    postedTime: 'Posted 2 Days Ago',
-    logoIcon: 'rocket-launch',
-    logoBg: '#EFF6FF',
-    logoIconColor: '#2563EB',
-  },
-  {
-    id: '2',
-    title: 'Lead UI/UX Designer',
-    company: 'CloudScale Inc.',
-    companyColor: '#7C3AED',
-    location: 'Mumbai, Maharashtra',
-    tags: ['Contract', '5+ Years'],
-    tagColors: ['#F5F3FF', '#FEF9C3'],
-    tagTextColors: ['#7C3AED', '#CA8A04'],
-    description:
-      'We are seeking a visionary UI/UX Designer to lead our product design team...',
-    salary: '₹12 - ₹20 LPA',
-    postedTime: 'Posted 5 Hours Ago',
-    logoIcon: 'cloud-outline',
-    logoBg: '#F5F3FF',
-    logoIconColor: '#7C3AED',
-  },
-  {
-    id: '3',
-    title: 'Junior Data Scientist',
-    company: 'Finlytic Analytics',
-    companyColor: '#0F766E',
-    location: 'Bangalore, Karnataka',
-    tags: ['Full Time', 'On-site'],
-    tagColors: ['#EFF6FF', '#ECFDF5'],
-    tagTextColors: ['#2563EB', '#059669'],
-    description:
-      'Join our data science team and work on real-world financial analytics problems...',
-    salary: '₹6 - ₹10 LPA',
-    postedTime: 'Posted Yesterday',
-    logoIcon: 'chart-line',
-    logoBg: '#ECFDF5',
-    logoIconColor: '#059669',
-  },
-  {
-    id: '4',
-    title: 'Backend Node.js Engineer',
-    company: 'Infra Systems Pvt.',
-    companyColor: '#DC2626',
-    location: 'Hyderabad, Telangana',
-    tags: ['Full Time', 'Hybrid', '2+ Years'],
-    tagColors: ['#EFF6FF', '#F5F3FF', '#FFF7ED'],
-    tagTextColors: ['#2563EB', '#7C3AED', '#EA580C'],
-    description:
-      'Build and maintain high-performance APIs and microservices for our SaaS platform...',
-    salary: '₹10 - ₹18 LPA',
-    postedTime: 'Posted 3 Days Ago',
-    logoIcon: 'server',
-    logoBg: '#FEF2F2',
-    logoIconColor: '#DC2626',
-  },
-];
-
-// ─── Main Screen ─────────────────────────────────────────────────────────────
+const NoJobs = ({ handleSearch }: { handleSearch: () => void }) => (
+  <View style={styles.noJobsContainer}>
+    <Icon
+      name="briefcase-search-outline"
+      size={64}
+      color={COLORS.gray300}
+      style={{ marginBottom: 12 }}
+    />
+    <Text style={styles.noJobsTitle}>No Jobs Found</Text>
+    <Text style={styles.noJobsSubtitle}>
+      We couldn't find any jobs matching your search criteria. Try modifying
+      your search keywords.
+    </Text>
+    <Button
+      variant="outline"
+      label="Clear Filters"
+      size="md"
+      width={160}
+      onPress={() => handleSearch()}
+    />
+  </View>
+);
 
 const Jobs = () => {
   const [jobTitle, setJobTitle] = useState('');
   const [location, setLocation] = useState('');
-  const [activeCategory, setActiveCategory] = useState('1');
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [searchLocation, setSearchLocation] = useState('');
   const [sortLabel, setSortLabel] = useState('Relevance');
   const [sortIndex, setSortIndex] = useState(0);
   const [showCustomHeader, setShowCustomHeader] = useState(true);
+  const [showSearchModel, setShowSearchModel] = useState(false);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [activeFilters, setActiveFilters] = useState<FilterState>({
+    experience: [],
+    salary: [],
+    location: [],
+    companyType: [],
+    workMode: [],
+  });
+
+  const filteredJobs = JOB_LISTINGS.filter(job => {
+    const matchesKeyword = jobTitle
+      ? job.title.toLowerCase().includes(jobTitle.toLowerCase()) ||
+        job.description.toLowerCase().includes(jobTitle.toLowerCase()) ||
+        job.company.toLowerCase().includes(jobTitle.toLowerCase())
+      : true;
+    const matchesLocation = location
+      ? job.location.toLowerCase().includes(location.toLowerCase())
+      : true;
+    return matchesKeyword && matchesLocation;
+  });
+
+  const handleSearchSubmit = (keyword: string, loc: string) => {
+    setJobTitle(keyword);
+    setLocation(loc);
+    setSearchKeyword(keyword);
+    setSearchLocation(loc);
+  };
 
   const cycleSort = () => {
     const next = (sortIndex + 1) % SORT_OPTIONS.length;
@@ -139,128 +168,106 @@ const Jobs = () => {
     }
   };
 
+  const handleSearch = () => {
+    setShowSearchModel(true);
+  };
+
+  const hideSearchModel = () => {
+    setShowSearchModel(false);
+  };
+
+  const handleOpenFilter = () => {
+    setShowFilterModal(true);
+  };
+
+  const handleApplyFilter = (filters: FilterState) => {
+    setActiveFilters(filters);
+  };
+
+  const appliedFilterCount = Object.values(activeFilters).reduce(
+    (acc, arr) => acc + arr.length,
+    0,
+  );
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
       <View style={styles.safeArea}>
         {/* ── Header ── */}
-        {showCustomHeader ? (
-          <View style={styles.header}>
-            <View>
-              <Text style={styles.headerTitle}>Find Your Dream Job</Text>
-              <Text style={styles.headerSubtitle}>
-                Discover opportunities that match your skills
-              </Text>
-            </View>
-            <View style={styles.headerRight}>
-              <TouchableOpacity style={styles.headerIcon}>
-                <Icon name="bell-outline" size={22} color={COLORS.gray700} />
-                <View style={styles.notifDot} />
-              </TouchableOpacity>
-            </View>
-          </View>
+        {showCustomHeader && jobTitle === '' && location === '' ? (
+          <CustomHeader />
         ) : (
-          <CommonHeader leftIcon SearchBar BellIcon />
+          <CommonHeader
+            leftIcon
+            SearchBar
+            BellIcon
+            onSearch={handleSearch}
+            Location={location}
+            Keyword={jobTitle}
+          />
         )}
 
+        {/* ── Results Header ── */}
+        {(jobTitle !== '' || location !== '') && (
+          <View style={{ paddingHorizontal: 16, paddingVertical: 4 }}>
+            <ResultsHeader
+              TotalJobs={filteredJobs.length}
+              cycleSort={cycleSort}
+              sortLabel={sortLabel}
+              onFilter={handleOpenFilter}
+              appliedFilterCount={appliedFilterCount}
+            />
+          </View>
+        )}
+
+        {/* Search Job Modal  */}
+        <SearchJobModal
+          visible={showSearchModel}
+          hideModal={hideSearchModel}
+          initialKeyword={jobTitle}
+          initialLocation={location}
+          onModifySearch={handleSearchSubmit}
+        />
+
+        {/* Filter Job Modal  */}
+        <FilterJobModal
+          visible={showFilterModal}
+          onClose={() => setShowFilterModal(false)}
+          onApply={handleApplyFilter}
+          initialFilters={activeFilters}
+        />
+
         <ScrollView
-          // style={styles.scroll}
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
           onScroll={handleScroll}
           scrollEventThrottle={16}
         >
-          {/* ── Search Inputs ── */}
-          <View style={styles.searchCard}>
-            <View style={styles.searchInput}>
-              <Icon name="magnify" size={18} color={COLORS.gray400} />
-              <TextInput
-                style={styles.searchTextInput}
-                placeholder="Job title, keyword..."
-                placeholderTextColor={COLORS.textMuted}
-                value={jobTitle}
-                onChangeText={setJobTitle}
+          {showCustomHeader && jobTitle === '' && location === '' && (
+            <View>
+              <SearchJobTab
+                keyword={searchKeyword}
+                location={searchLocation}
+                onSearch={handleSearchSubmit}
+              />
+
+              <ResultsHeader
+                TotalJobs={filteredJobs.length}
+                cycleSort={cycleSort}
+                sortLabel={sortLabel}
+                onFilter={handleOpenFilter}
+                appliedFilterCount={appliedFilterCount}
               />
             </View>
-            <View style={styles.searchDivider} />
-            <View style={styles.searchInput}>
-              <Icon
-                name="map-marker-outline"
-                size={18}
-                color={COLORS.gray400}
-              />
-              <TextInput
-                style={styles.searchTextInput}
-                placeholder="City, state or remote"
-                placeholderTextColor={COLORS.textMuted}
-                value={location}
-                onChangeText={setLocation}
-              />
-            </View>
-            <View style={{ marginTop: 6 }}>
-              <Button variant="gradient" label="Search Jobs" size="md" />
-            </View>
-          </View>
-
-          {/* ── Quick Categories ── */}
-          <Text style={styles.quickCatLabel}>QUICK CATEGORIES</Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.quickCatRow}
-          >
-            {QUICK_CATEGORIES.map(cat => {
-              return (
-                <TouchableOpacity
-                  key={cat.id}
-                  onPress={() => setActiveCategory(cat.id)}
-                  activeOpacity={0.8}
-                  style={[styles.quickCatChip]}
-                >
-                  <Text style={[styles.quickCatText]}>{cat.label}</Text>
-                </TouchableOpacity>
-              );
-            })}
-          </ScrollView>
-
-          {/* ── Filter Chips ── */}
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.filterRow}
-          >
-            {FILTER_CHIPS.map(chip => (
-              <TouchableOpacity
-                key={chip.id}
-                style={styles.filterChip}
-                activeOpacity={0.8}
-              >
-                <Icon name={chip.icon} size={14} color={COLORS.gray600} />
-                <Text style={styles.filterChipText}>{chip.label}</Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-
-          {/* ── Results Header ── */}
-          <View style={styles.resultsRow}>
-            <Text style={styles.resultsCount}>1,245 Jobs Found</Text>
-            <TouchableOpacity
-              onPress={cycleSort}
-              style={styles.sortBtn}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.sortLabel}>
-                Sort by: <Text style={styles.sortValue}>{sortLabel}</Text>
-              </Text>
-              <Icon name="chevron-down" size={16} color={COLORS.secondary} />
-            </TouchableOpacity>
-          </View>
+          )}
 
           {/* ── Job Listings ── */}
-          {JOB_LISTINGS.map(item => (
-            <JobCard key={item.id} item={item} />
-          ))}
+          {filteredJobs.length === 0 ? (
+            <NoJobs handleSearch={() => handleSearchSubmit('', '')} />
+          ) : (
+            filteredJobs.map(item => <JobCard key={item.id} item={item} />)
+          )}
 
-          <View style={{ height: 80 }} />
+          <View style={{ height: 120 }} />
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -270,10 +277,8 @@ const Jobs = () => {
 export default Jobs;
 
 // ─── Styles ──────────────────────────────────────────────────────────────────
-
 const styles = StyleSheet.create({
   safeArea: {
-    // flex: 1,
     backgroundColor: COLORS.background,
   },
 
@@ -283,8 +288,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingTop: 14,
-    paddingBottom: 10,
+    paddingVertical: 18,
   },
   headerTitle: {
     fontFamily: FONT_FAMILY.PBold,
@@ -317,7 +321,6 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: COLORS.background,
   },
-  avatarBtn: {},
   avatar: {
     width: 36,
     height: 36,
@@ -333,116 +336,9 @@ const styles = StyleSheet.create({
   },
 
   // Scroll
-  // scroll: { flex: 1 },
   scrollContent: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingTop: 4,
-  },
-
-  // Search Card
-  searchCard: {
-    backgroundColor: COLORS.card,
-    borderRadius: 8,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.07,
-    shadowRadius: 10,
-    elevation: 4,
-    gap: 3,
-  },
-  searchInput: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 8,
-    gap: 8,
-  },
-  searchTextInput: {
-    flex: 1,
-    fontFamily: FONT_FAMILY.IRegular,
-    fontSize: FONT_SIZE.md,
-    color: '#1E293B',
-    padding: 0,
-  },
-  searchDivider: {
-    height: 1,
-    backgroundColor: COLORS.border,
-    marginVertical: 2,
-  },
-  searchBtn: {
-    marginTop: 10,
-    backgroundColor: COLORS.secondary,
-    borderRadius: 30,
-    paddingVertical: 13,
-    alignItems: 'center',
-    shadowColor: COLORS.secondary,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.35,
-    shadowRadius: 8,
-    elevation: 5,
-  },
-  searchBtnText: {
-    fontFamily: FONT_FAMILY.PSemiBold,
-    fontSize: FONT_SIZE.md,
-    color: '#fff',
-    letterSpacing: 0.3,
-  },
-
-  // Quick Categories
-  quickCatLabel: {
-    fontFamily: FONT_FAMILY.PSemiBold,
-    fontSize: FONT_SIZE.xs,
-    color: COLORS.gray500,
-    letterSpacing: 1.2,
-    marginBottom: 10,
-  },
-  quickCatRow: {
-    gap: 8,
-    paddingBottom: 14,
-  },
-  quickCatChip: {
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderWidth: 1.5,
-    borderColor: COLORS.border,
-    backgroundColor: COLORS.card,
-  },
-  quickCatText: {
-    fontFamily: FONT_FAMILY.IMedium,
-    fontSize: FONT_SIZE.sm,
-    color: '#334155',
-  },
-
-  // Filter Chips
-  filterRow: {
-    gap: 8,
-    paddingBottom: 14,
-  },
-  filterChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderWidth: 1.5,
-    borderColor: COLORS.border,
-    backgroundColor: COLORS.card,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 3,
-    elevation: 1,
-  },
-  filterChipText: {
-    fontFamily: FONT_FAMILY.IMedium,
-    fontSize: FONT_SIZE.sm,
-    color: COLORS.gray700,
   },
 
   // Results Row
@@ -451,11 +347,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 14,
+    marginTop: 4,
+    paddingHorizontal: 4,
   },
   resultsCount: {
     fontFamily: FONT_FAMILY.PSemiBold,
     fontSize: FONT_SIZE.md,
     color: '#1E293B',
+  },
+  resultsActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
   sortBtn: {
     flexDirection: 'row',
@@ -471,22 +374,57 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY.ISemiBold,
     color: COLORS.secondary,
   },
-
-  // FAB
-  fab: {
+  filterIconBtn: {
+    position: 'relative',
+    padding: 6,
+    borderRadius: 8,
+    backgroundColor: COLORS.backgroundSecondary,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+  },
+  filterBadge: {
     position: 'absolute',
-    bottom: 20,
-    right: 16,
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    backgroundColor: COLORS.secondary,
+    top: -4,
+    right: -4,
+    minWidth: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: COLORS.secondary,
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.4,
-    shadowRadius: 10,
-    elevation: 8,
+    paddingHorizontal: 3,
+  },
+  filterBadgeText: {
+    fontFamily: FONT_FAMILY.PBold,
+    fontSize: 9,
+    color: COLORS.white,
+  },
+
+  // no Jobs
+  noJobsContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 40,
+    paddingHorizontal: 20,
+    backgroundColor: COLORS.card,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  noJobsTitle: {
+    fontFamily: FONT_FAMILY.PBold,
+    fontSize: FONT_SIZE.lg,
+    color: COLORS.gray800,
+    marginBottom: 6,
+  },
+  noJobsSubtitle: {
+    fontFamily: FONT_FAMILY.IRegular,
+    fontSize: FONT_SIZE.sm,
+    color: COLORS.gray500,
+    textAlign: 'center',
+    marginBottom: 20,
+    lineHeight: 18,
   },
 });

@@ -5,29 +5,51 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { SectionHeader } from './SectionHeader';
 import COLORS from '../../constants/colors';
 import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
-
+import CategoryModal from '../modals/CategoryModal';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const CATEGORIES = [
-  { id: '1', label: 'IT', icon: '💻' },
-  { id: '2', label: 'Finance', icon: '💰' },
-  { id: '3', label: 'Health', icon: '🏥' },
-  { id: '4', label: 'Marketing', icon: '📊' },
+  { id: '1', label: 'IT', icon: 'laptop' },
+  { id: '2', label: 'Finance', icon: 'cash-multiple' },
+  { id: '3', label: 'Health', icon: 'hospital-box' },
+  { id: '4', label: 'Marketing', icon: 'bullhorn' },
+  { id: '5', label: 'Education', icon: 'school' },
+  { id: '6', label: 'Engineering', icon: 'cog-outline' },
+  { id: '7', label: 'Sales', icon: 'handshake' },
+  { id: '8', label: 'HR', icon: 'account-group' },
+  { id: '9', label: 'Design', icon: 'palette' },
+  { id: '10', label: 'Legal', icon: 'scale-balance' },
+  { id: '11', label: 'Retail', icon: 'store' },
+  { id: '12', label: 'Logistics', icon: 'truck-delivery' },
+  { id: '13', label: 'Hospitality', icon: 'silverware-fork-knife' },
+  { id: '14', label: 'Construction', icon: 'hammer-wrench' },
+  { id: '15', label: 'Government', icon: 'office-building' },
 ];
 
 const CategoryChip = ({ label, icon }: { label: string; icon: string }) => (
   <TouchableOpacity style={styles.categoryChip} activeOpacity={0.75}>
-    <Text style={styles.categoryIcon}>{icon}</Text>
+    <Icon name={icon} size={16} color={COLORS.primary} />
     <Text style={styles.categoryLabel}>{label}</Text>
   </TouchableOpacity>
 );
 
 const Categories = () => {
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+
+  const handleViewAll = () => {
+    setShowCategoryModal(true);
+  };
+
   return (
     <View>
-      <SectionHeader title="Categories" actionLabel="View All" />
+      <SectionHeader
+        title="Categories"
+        actionLabel="View All"
+        onPress={handleViewAll}
+      />
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -37,6 +59,11 @@ const Categories = () => {
           <CategoryChip key={cat.id} label={cat.label} icon={cat.icon} />
         ))}
       </ScrollView>
+
+      <CategoryModal
+        visible={showCategoryModal}
+        onClose={() => setShowCategoryModal(false)}
+      />
     </View>
   );
 };
@@ -64,12 +91,9 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  categoryIcon: {
-    fontSize: 16,
-  },
   categoryLabel: {
     fontFamily: FONT_FAMILY.IMedium,
-    fontSize: FONT_SIZE.md,
+    fontSize: 14,
     color: '#334155',
   },
 });

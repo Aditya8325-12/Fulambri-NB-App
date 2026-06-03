@@ -12,7 +12,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../constants/colors';
 import { FONT_FAMILY } from '../../constants/fonts';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import { useAppDispatch } from '../../redux/hook';
+import { setLoggedIn } from '../../redux/fetatures/auth/authSlice';
 const MENU_ITEMS = [
   {
     id: 'recommended_jobs',
@@ -66,7 +69,8 @@ const MENU_ITEMS = [
 
 const CustomDrawerContent = (props: any) => {
   const [activeItem, setActiveItem] = useState('recommended_jobs');
-
+  const navigation = useNavigation();
+  const dispatch = useAppDispatch();
   const handleItemPress = (itemId: string) => {
     setActiveItem(itemId);
     props.navigation.closeDrawer();
@@ -81,7 +85,7 @@ const CustomDrawerContent = (props: any) => {
     // props.navigation.navigate('EditProfile');
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     Alert.alert(
       'Sign Out',
       'Are you sure you want to sign out of your account?',
@@ -93,13 +97,13 @@ const CustomDrawerContent = (props: any) => {
         {
           text: 'Sign Out',
           style: 'destructive',
-          onPress: () => {
-            // Handle logout logic here
-            // e.g., dispatch(logout()), clear AsyncStorage, navigate to Login
+          onPress: async () => {
+            await AsyncStorage.clear();
+            dispatch(setLoggedIn(false));
           },
         },
       ],
-      { cancelable: true }
+      { cancelable: true },
     );
   };
 
@@ -161,7 +165,7 @@ const CustomDrawerContent = (props: any) => {
 
         {/* Drawer Menu Items */}
         <View style={styles.menuContainer}>
-          {MENU_ITEMS.map((item) => {
+          {MENU_ITEMS.map(item => {
             return (
               <TouchableOpacity
                 key={item.id}
@@ -176,13 +180,7 @@ const CustomDrawerContent = (props: any) => {
                     color={COLORS.textNormal}
                   />
                 </View>
-                <Text
-                  style={[
-                    styles.menuLabel,
-                  ]}
-                >
-                  {item.label}
-                </Text>
+                <Text style={[styles.menuLabel]}>{item.label}</Text>
               </TouchableOpacity>
             );
           })}
@@ -219,7 +217,7 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    marginTop: 20
+    marginTop: 20,
   },
   header: {
     paddingTop: 20,

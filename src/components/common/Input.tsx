@@ -7,6 +7,7 @@ import {
   KeyboardTypeOptions,
   DimensionValue,
   TouchableOpacity,
+  ReturnKeyTypeOptions,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TYPOGRAPHY from '../../theme/typography';
@@ -28,6 +29,17 @@ interface InputProps {
   multiline?: boolean;
   numberOfLines?: number;
   secureTextEntry?: boolean;
+
+  /** Optional icon rendered on the left side of the input */
+  icon?: React.ReactNode;
+
+  /** Focus / blur callbacks */
+  onFocus?: () => void;
+  onBlur?: () => void;
+
+  /** Keyboard action button */
+  returnKeyType?: ReturnKeyTypeOptions;
+  onSubmitEditing?: () => void;
 }
 
 
@@ -45,6 +57,11 @@ const Input: React.FC<InputProps> = ({
   multiline = false,
   numberOfLines = 1,
   secureTextEntry = false,
+  icon,
+  onFocus,
+  onBlur,
+  returnKeyType,
+  onSubmitEditing,
 }) => {
   const [isSecure, setIsSecure] = useState(secureTextEntry);
 
@@ -69,6 +86,8 @@ const Input: React.FC<InputProps> = ({
       )}
 
       <View style={inputContainerStyles}>
+        {icon && <View style={styles.leftIconContainer}>{icon}</View>}
+
         <TextInput
           style={[
             styles.input,
@@ -84,6 +103,10 @@ const Input: React.FC<InputProps> = ({
           numberOfLines={numberOfLines}
           secureTextEntry={isSecure}
           autoCapitalize="none"
+          onFocus={onFocus}
+          onBlur={onBlur}
+          returnKeyType={returnKeyType}
+          onSubmitEditing={onSubmitEditing}
         />
 
         {secureTextEntry && (
@@ -152,6 +175,12 @@ const styles = StyleSheet.create({
   disabled: {
     opacity: 0.5,
     backgroundColor: COLORS.gray100,
+  },
+
+  leftIconContainer: {
+    paddingRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   iconContainer: {
