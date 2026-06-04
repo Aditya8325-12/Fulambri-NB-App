@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -24,7 +24,9 @@ import FilterJobModal, {
   FilterState,
 } from '../../components/modals/FilterJobModal';
 import SearchJobTab from '../../components/Jobs/SearchJobTab';
-
+import type { RouteProp } from '@react-navigation/native';
+import type { RootStackParamList } from '../../types/Navigation';
+import Toast from 'react-native-toast-message';
 const ResultsHeader = ({
   TotalJobs,
   cycleSort,
@@ -112,8 +114,8 @@ const NoJobs = ({ handleSearch }: { handleSearch: () => void }) => (
   </View>
 );
 
-const Jobs = () => {
-  const [jobTitle, setJobTitle] = useState('');
+const Jobs = ({ route }: { route: RouteProp<RootStackParamList, 'Jobs'> }) => {
+  const [jobTitle, setJobTitle] = useState(route.params?.keyword || '');
   const [location, setLocation] = useState('');
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchLocation, setSearchLocation] = useState('');
@@ -129,6 +131,17 @@ const Jobs = () => {
     companyType: [],
     workMode: [],
   });
+
+  useEffect(() => {
+    if (route.params?.keyword !== undefined) {
+      setJobTitle(route.params.keyword);
+      setSearchKeyword(route.params.keyword);
+      Toast.show({
+        type: 'success',
+        text1: route.params.keyword || 'No keyword',
+      });
+    }
+  }, [route.params?.keyword]);
 
   const filteredJobs = JOB_LISTINGS.filter(job => {
     const matchesKeyword = jobTitle

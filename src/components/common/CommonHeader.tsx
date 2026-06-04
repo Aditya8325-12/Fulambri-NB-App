@@ -21,15 +21,22 @@ const CommonHeader = ({
     <View style={styles.container}>
       {/* Left Icon */}
 
-      {leftIcon == true && (
-        <TouchableOpacity
-          activeOpacity={0.6}
-          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-          style={styles.iconButton}
-        >
-          <Icon name="menu" size={24} color={COLORS.Icon_Inactive} />
-        </TouchableOpacity>
-      )}
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {leftIcon == true && (
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+            style={styles.iconButton}
+          >
+            <Icon name="menu" size={28} color={COLORS.gray800} />
+          </TouchableOpacity>
+        )}
+        {title != '' && (
+          <View>
+            <Text style={styles.headerTitle}>{title}</Text>
+          </View>
+        )}
+      </View>
 
       {/* Search Bar */}
       {SearchBar == true && (
@@ -61,7 +68,7 @@ const CommonHeader = ({
           style={styles.iconButton}
         >
           <View style={styles.notifWrapper}>
-            <Icon name="bell-outline" size={24} color={COLORS.Icon_Inactive} />
+            <Icon name="bell-outline" size={24} color={COLORS.gray800} />
             {hasNotification && <View style={styles.badge} />}
           </View>
         </TouchableOpacity>
@@ -76,13 +83,19 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 10,
   },
   iconButton: {
     padding: 6,
     borderRadius: 20,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontFamily: FONT_FAMILY.PSemiBold,
+    color: COLORS.gray800,
+    marginLeft: 8,
   },
   searchContainer: {
     flex: 1,

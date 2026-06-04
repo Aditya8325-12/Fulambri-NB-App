@@ -11,6 +11,11 @@ import COLORS from '../../constants/colors';
 import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
 import CategoryModal from '../modals/CategoryModal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Toast from 'react-native-toast-message';
+import { useNavigation } from '@react-navigation/native';
+
+import type { RootStackParamList } from '../../types/Navigation';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 const CATEGORIES = [
   { id: '1', label: 'IT', icon: 'laptop' },
   { id: '2', label: 'Finance', icon: 'cash-multiple' },
@@ -29,12 +34,34 @@ const CATEGORIES = [
   { id: '15', label: 'Government', icon: 'office-building' },
 ];
 
-const CategoryChip = ({ label, icon }: { label: string; icon: string }) => (
-  <TouchableOpacity style={styles.categoryChip} activeOpacity={0.75}>
-    <Icon name={icon} size={16} color={COLORS.primary} />
-    <Text style={styles.categoryLabel}>{label}</Text>
-  </TouchableOpacity>
-);
+type JobsScreenNavgationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Home'
+>;
+
+const CategoryChip = ({ label, icon }: { label: string; icon: string }) => {
+  const navigation = useNavigation<JobsScreenNavgationProp>();
+
+  return (
+    <TouchableOpacity
+      style={styles.categoryChip}
+      activeOpacity={0.75}
+      onPress={() => {
+        Toast.show({
+          type: 'success',
+          text1: 'test',
+          text2: label,
+        });
+        navigation.navigate('Jobs', {
+          keyword: label,
+        });
+      }}
+    >
+      <Icon name={icon} size={16} color={COLORS.primary} />
+      <Text style={styles.categoryLabel}>{label}</Text>
+    </TouchableOpacity>
+  );
+};
 
 const Categories = () => {
   const [showCategoryModal, setShowCategoryModal] = useState(false);

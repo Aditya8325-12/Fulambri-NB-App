@@ -77,6 +77,9 @@ const CustomDrawerContent = (props: any) => {
     if (itemId === 'my_files') {
       props.navigation.navigate('MainTabs');
     }
+    if (itemId === 'settings') {
+      props.navigation.navigate('Settings');
+    }
   };
 
   const handleEditProfile = () => {

@@ -7,11 +7,17 @@ import Jobs from '../../screens/user/Jobs';
 import Notification from '../../screens/user/Notification';
 import { FONT_FAMILY } from '../../constants/fonts';
 import COLORS from '../../constants/colors';
-import Setting from '../../screens/user/Setting';
-import CommonHeader from '../../components/common/CommonHeader';
-const Tab = createBottomTabNavigator();
+import Profile from '../../screens/user/Profile';
+export type BottomTabParamList = {
+  Home: undefined;
+  Jobs: {
+    keyword?: string;
+  };
+  Alerts: undefined;
+  Profile: undefined;
+};
 
-
+const Tab = createBottomTabNavigator<BottomTabParamList>();
 
 type TabIconProps = {
   iconName: string;
@@ -47,10 +53,12 @@ const BottomTabs = () => {
       <Tab.Screen
         name="Home"
         component={Home}
-
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon iconName={focused ? 'home' : 'home-outline'} focused={focused} />
+            <TabIcon
+              iconName={focused ? 'home' : 'home-outline'}
+              focused={focused}
+            />
           ),
         }}
       />
@@ -59,7 +67,10 @@ const BottomTabs = () => {
         component={Jobs}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon iconName={focused ? 'briefcase' : 'briefcase-outline'} focused={focused} />
+            <TabIcon
+              iconName={focused ? 'briefcase' : 'briefcase-outline'}
+              focused={focused}
+            />
           ),
         }}
       />
@@ -68,16 +79,22 @@ const BottomTabs = () => {
         component={Notification}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon iconName={focused ? 'bell' : 'bell-outline'} focused={focused} />
+            <TabIcon
+              iconName={focused ? 'bell' : 'bell-outline'}
+              focused={focused}
+            />
           ),
         }}
       />
       <Tab.Screen
-        name="Setting"
-        component={Setting}
+        name="Profile"
+        component={Profile}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon iconName={focused ? 'cog' : 'cog-outline'} focused={focused} />
+            <TabIcon
+              iconName={focused ? 'account-circle' : 'account-circle-outline'}
+              focused={focused}
+            />
           ),
         }}
       />
@@ -104,7 +121,6 @@ const styles = StyleSheet.create({
     marginTop: 2,
     fontFamily: FONT_FAMILY.PMedium,
     // color: '#49454F'
-
   },
   iconWrapper: {
     width: 48,

@@ -2,13 +2,14 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import BottomTabs from './BottomTabs';
 import CustomDrawerContent from './CustomDrawerContent';
+import Setting from '../../screens/user/Setting';
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      drawerContent={props => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerShown: false,
         drawerStyle: {
@@ -22,6 +23,13 @@ const DrawerNavigator = () => {
         component={BottomTabs}
         options={{
           drawerLabel: 'Home',
+        }}
+      />
+      <Drawer.Screen
+        name="Settings"
+        component={Setting}
+        options={{
+          drawerLabel: 'Settings',
         }}
       />
     </Drawer.Navigator>

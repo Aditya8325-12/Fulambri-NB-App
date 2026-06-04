@@ -20,7 +20,9 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<
 const Home = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const handleOnSearch = () => {
-    navigation.navigate('Jobs');
+    navigation.navigate('Jobs', {
+      keyword: '',
+    });
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
