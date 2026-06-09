@@ -7,14 +7,14 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { SectionHeader } from './SectionHeader';
-import COLORS from '../../constants/colors';
-import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
-import CategoryModal from '../modals/CategoryModal';
+import COLORS from '../../../../constants/colors';
+import { FONT_FAMILY, FONT_SIZE } from '../../../../constants/fonts';
+import CategoryModal from '../../../../components/modals/CategoryModal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
 
-import type { RootStackParamList } from '../../types/Navigation';
+import type { RootStackParamList } from '../../../../types/Navigation';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 const CATEGORIES = [
   { id: '1', label: 'IT', icon: 'laptop' },

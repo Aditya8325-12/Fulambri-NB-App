@@ -5,30 +5,58 @@ import COLORS from '../../constants/colors';
 import { FONT_FAMILY } from '../../constants/fonts';
 import { useNavigation, DrawerActions } from '@react-navigation/native';
 
+interface CommonHeaderProps {
+  title?: string;
+  onSearch?: () => void;
+  onNotification?: () => void;
+  hasNotification?: boolean;
+  BackIcon?: boolean;
+  DrawerIcon?: boolean;
+  BellIcon?: boolean;
+  SearchBar?: boolean;
+  Location?: string;
+  Keyword?: string;
+}
+
 const CommonHeader = ({
   title,
   onSearch,
   onNotification,
   hasNotification = true,
-  leftIcon,
+  BackIcon,
+  DrawerIcon,
   BellIcon,
   SearchBar,
   Location,
   Keyword,
-}: any) => {
+}: CommonHeaderProps) => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       {/* Left Icon */}
-
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        {leftIcon == true && (
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+        }}
+      >
+        {DrawerIcon == true && (
           <TouchableOpacity
             activeOpacity={0.6}
             onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
             style={styles.iconButton}
           >
             <Icon name="menu" size={28} color={COLORS.gray800} />
+          </TouchableOpacity>
+        )}
+        {BackIcon == true && (
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={() => navigation.goBack()}
+            style={styles.iconButton}
+          >
+            <Icon name="arrow-left" size={28} color={COLORS.gray800} />
           </TouchableOpacity>
         )}
         {title != '' && (
@@ -101,7 +129,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginLeft: 2,
     backgroundColor: '#F5F5F5',
     paddingHorizontal: 12,
     height: 42,

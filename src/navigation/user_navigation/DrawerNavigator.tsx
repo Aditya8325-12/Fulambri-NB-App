@@ -2,9 +2,11 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import BottomTabs from './BottomTabs';
 import CustomDrawerContent from './CustomDrawerContent';
-import Setting from '../../screens/user/Setting';
+import Setting from '../../screens/user/Setting/SettingScreen';
+import EditProfile from '../../screens/user/Profile/EditProfileScreen';
+import { DrawerParamList } from '../../types/Navigation';
 
-const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator<DrawerParamList>();
 
 const DrawerNavigator = () => {
   return (
@@ -30,6 +32,14 @@ const DrawerNavigator = () => {
         component={Setting}
         options={{
           drawerLabel: 'Settings',
+        }}
+      />
+      <Drawer.Screen
+        name="EditProfile"
+        component={EditProfile}
+        initialParams={{ EDIT: false, ADD: false, title: 'EditProfile' }}
+        options={{
+          drawerLabel: 'EditProfile',
         }}
       />
     </Drawer.Navigator>

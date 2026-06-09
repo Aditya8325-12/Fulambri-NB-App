@@ -10,7 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import COLORS from '../../constants/colors';
+import COLORS from '../../../constants/colors';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -48,7 +48,9 @@ const SettingRow: React.FC<SettingRowProps> = ({
       {sublabel ? <Text style={styles.rowSublabel}>{sublabel}</Text> : null}
     </View>
     {rightElement ?? (
-      <Text style={[styles.chevron, danger && { color: COLORS.danger }]}>›</Text>
+      <Text style={[styles.chevron, danger && { color: COLORS.danger }]}>
+        ›
+      </Text>
     )}
   </TouchableOpacity>
 );
@@ -231,17 +233,9 @@ const Setting = () => {
             }
           />
           <Divider />
-          <SettingRow
-            icon="🔒"
-            label="Privacy Policy"
-            onPress={() => {}}
-          />
+          <SettingRow icon="🔒" label="Privacy Policy" onPress={() => {}} />
           <Divider />
-          <SettingRow
-            icon="📋"
-            label="Terms & Conditions"
-            onPress={() => {}}
-          />
+          <SettingRow icon="📋" label="Terms & Conditions" onPress={() => {}} />
           <Divider />
           <SettingRow
             icon="ℹ️"

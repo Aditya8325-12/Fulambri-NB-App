@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
-import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
-import COLORS from '../../constants/colors';
-import Button from '../common/Button';
+import { FONT_FAMILY, FONT_SIZE } from '../../../../constants/fonts';
+import COLORS from '../../../../constants/colors';
+import Button from '../../../../components/common/Button';
 
 const GovtJobsBanner = () => {
   return (

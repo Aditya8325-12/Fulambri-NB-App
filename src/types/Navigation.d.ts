@@ -3,4 +3,19 @@ export type RootStackParamList = {
   Jobs: {
     keyword?: string;
   };
+  EditProfile: {
+    EDIT: boolean;
+    ADD: boolean;
+    title: string;
+  };
+};
+
+export type DrawerParamList = {
+  MainTabs: undefined;
+  Settings: undefined;
+  EditProfile: {
+    EDIT?: boolean;
+    ADD?: boolean;
+    title?: string;
+  };
 };

@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import COLORS from '../../constants/colors';
-import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
-import Button from '../../components/common/Button';
-import { QUICK_CATEGORIES } from './SampleData/Data';
+import COLORS from '../../../../constants/colors';
+import { FONT_FAMILY, FONT_SIZE } from '../../../../constants/fonts';
+import Button from '../../../../components/common/Button';
+import { QUICK_CATEGORIES } from '../SampleData/Data';
 const SearchJobTab = ({
   keyword,
   location,

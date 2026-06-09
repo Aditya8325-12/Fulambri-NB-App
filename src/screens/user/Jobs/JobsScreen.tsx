@@ -10,22 +10,19 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import COLORS from '../../constants/colors';
-import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
-import CommonHeader from '../../components/common/CommonHeader';
-import JobCard from '../../components/Jobs/JobCard';
-import Button from '../../components/common/Button';
-import {
-  JOB_LISTINGS,
-  SORT_OPTIONS,
-} from '../../components/Jobs/SampleData/Data';
-import SearchJobModal from '../../components/modals/SearchJobModal';
+import COLORS from '../../../constants/colors';
+import { FONT_FAMILY, FONT_SIZE } from '../../../constants/fonts';
+import CommonHeader from '../../../components/common/CommonHeader';
+import JobCard from './components/JobCard';
+import Button from '../../../components/common/Button';
+import { JOB_LISTINGS, SORT_OPTIONS } from './SampleData/Data';
+import SearchJobModal from '../../../components/modals/SearchJobModal';
 import FilterJobModal, {
   FilterState,
-} from '../../components/modals/FilterJobModal';
-import SearchJobTab from '../../components/Jobs/SearchJobTab';
+} from '../../../components/modals/FilterJobModal';
+import SearchJobTab from './components/SearchJobTab';
 import type { RouteProp } from '@react-navigation/native';
-import type { RootStackParamList } from '../../types/Navigation';
+import type { RootStackParamList } from '../../../types/Navigation';
 import Toast from 'react-native-toast-message';
 const ResultsHeader = ({
   TotalJobs,
@@ -210,7 +207,7 @@ const Jobs = ({ route }: { route: RouteProp<RootStackParamList, 'Jobs'> }) => {
           <CustomHeader />
         ) : (
           <CommonHeader
-            leftIcon
+            DrawerIcon
             SearchBar
             BellIcon
             onSearch={handleSearch}

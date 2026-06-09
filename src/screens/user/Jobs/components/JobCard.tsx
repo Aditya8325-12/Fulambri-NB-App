@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
-import { JOB_LISTINGS } from './SampleData/Data';
-import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
-import COLORS from '../../constants/colors';
+import { JOB_LISTINGS } from '../SampleData/Data';
+import { FONT_FAMILY, FONT_SIZE } from '../../../../constants/fonts';
+import COLORS from '../../../../constants/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 

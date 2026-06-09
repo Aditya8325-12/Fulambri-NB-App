@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
+import { FONT_FAMILY, FONT_SIZE } from '../../../../constants/fonts';
 import { SectionHeader } from './SectionHeader';
 
 const CARD_WIDTH = Dimensions.get('window').width * 0.62;

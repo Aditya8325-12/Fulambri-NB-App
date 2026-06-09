@@ -2,12 +2,12 @@ import React from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Home from '../../screens/user/Home';
-import Jobs from '../../screens/user/Jobs';
-import Notification from '../../screens/user/Notification';
+import Home from '../../screens/user/Home/HomeScreen';
+import Jobs from '../../screens/user/Jobs/JobsScreen';
+import Notification from '../../screens/user/Notification/NotificationScreen';
 import { FONT_FAMILY } from '../../constants/fonts';
 import COLORS from '../../constants/colors';
-import Profile from '../../screens/user/Profile';
+import Profile from '../../screens/user/Profile/ProfileScreen';
 export type BottomTabParamList = {
   Home: undefined;
   Jobs: {

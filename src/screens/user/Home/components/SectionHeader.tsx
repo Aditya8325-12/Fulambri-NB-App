@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
-import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
-import COLORS from '../../constants/colors';
+import { FONT_FAMILY, FONT_SIZE } from '../../../../constants/fonts';
+import COLORS from '../../../../constants/colors';
 
 export const SectionHeader = ({
   title,

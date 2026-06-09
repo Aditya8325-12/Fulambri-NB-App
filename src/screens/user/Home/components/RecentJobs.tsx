@@ -6,8 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
-import COLORS from '../../constants/colors';
+import { FONT_FAMILY, FONT_SIZE } from '../../../../constants/fonts';
+import COLORS from '../../../../constants/colors';
 import { SectionHeader } from './SectionHeader';
 
 const RECENT_POSTINGS = [

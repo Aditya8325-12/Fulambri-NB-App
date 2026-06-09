@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
-import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
-import COLORS from '../../constants/colors';
+import { FONT_FAMILY, FONT_SIZE } from '../../../../constants/fonts';
+import COLORS from '../../../../constants/colors';
 import { SectionHeader } from './SectionHeader';
 const RECOMMENDED_JOBS = [
   {
