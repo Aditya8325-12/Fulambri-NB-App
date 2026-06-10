@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   StyleSheet,
   Text,
@@ -21,7 +21,7 @@ import FilterJobModal, {
   FilterState,
 } from '../../../components/modals/FilterJobModal';
 import SearchJobTab from './components/SearchJobTab';
-import type { RouteProp } from '@react-navigation/native';
+import { useFocusEffect, type RouteProp } from '@react-navigation/native';
 import type { RootStackParamList } from '../../../types/Navigation';
 import Toast from 'react-native-toast-message';
 const ResultsHeader = ({
@@ -128,6 +128,13 @@ const Jobs = ({ route }: { route: RouteProp<RootStackParamList, 'Jobs'> }) => {
     companyType: [],
     workMode: [],
   });
+
+  const ScrollViewRef = useRef<ScrollView>(null);
+  useFocusEffect(
+    useCallback(() => {
+      ScrollViewRef.current?.scrollTo({ y: 0, animated: false });
+    }, []),
+  );
 
   useEffect(() => {
     if (route.params?.keyword !== undefined) {
@@ -247,6 +254,7 @@ const Jobs = ({ route }: { route: RouteProp<RootStackParamList, 'Jobs'> }) => {
         />
 
         <ScrollView
+          ref={ScrollViewRef}
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
           onScroll={handleScroll}

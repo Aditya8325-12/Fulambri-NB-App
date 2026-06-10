@@ -5,6 +5,7 @@ import CustomDrawerContent from './CustomDrawerContent';
 import Setting from '../../screens/user/Setting/SettingScreen';
 import EditProfile from '../../screens/user/Profile/EditProfileScreen';
 import { DrawerParamList } from '../../types/Navigation';
+import PdfViewerScreen from '../../screens/common/PdfViewerScreen';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -40,6 +41,13 @@ const DrawerNavigator = () => {
         initialParams={{ EDIT: false, ADD: false, title: 'EditProfile' }}
         options={{
           drawerLabel: 'EditProfile',
+        }}
+      />
+      <Drawer.Screen
+        name="PdfView"
+        component={PdfViewerScreen}
+        options={{
+          drawerLabel: 'PDF',
         }}
       />
     </Drawer.Navigator>

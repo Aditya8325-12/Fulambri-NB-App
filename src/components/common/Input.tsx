@@ -20,6 +20,7 @@ interface InputProps {
   onChange?: (value: string) => void;
   type?: KeyboardTypeOptions;
   width?: DimensionValue;
+  height?: DimensionValue;
 
   variant?: 'default' | 'borderless' | 'outline' | 'filled';
 
@@ -42,8 +43,6 @@ interface InputProps {
   onSubmitEditing?: () => void;
 }
 
-
-
 const Input: React.FC<InputProps> = ({
   label,
   placeholder = '',
@@ -51,6 +50,7 @@ const Input: React.FC<InputProps> = ({
   onChange,
   type = 'default',
   width = '100%',
+  height,
   variant = 'default',
   disabled = false,
   required = false,
@@ -74,6 +74,7 @@ const Input: React.FC<InputProps> = ({
     styles[variant],
     multiline && styles.multilineWrapper,
     disabled && styles.disabled,
+    height !== undefined && { height },
   ];
 
   return (
@@ -89,10 +90,7 @@ const Input: React.FC<InputProps> = ({
         {icon && <View style={styles.leftIconContainer}>{icon}</View>}
 
         <TextInput
-          style={[
-            styles.input,
-            multiline && styles.multilineInput,
-          ]}
+          style={[styles.input, multiline && styles.multilineInput]}
           placeholder={placeholder}
           placeholderTextColor={COLORS.textMuted}
           value={value}
@@ -211,6 +209,4 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.gray100,
     borderColor: COLORS.gray100,
   },
-
-
 });

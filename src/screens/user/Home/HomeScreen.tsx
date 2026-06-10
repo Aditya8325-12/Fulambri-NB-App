@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import COLORS from '../../../constants/colors';
 import CommonHeader from '../../../components/common/CommonHeader';
@@ -8,7 +8,7 @@ import FeaturedJobs from './components/FeaturedJobs';
 import GovtJobsBanner from './components/GovtJobsBanner';
 import RecommendedJobs from './components/RecommendedJobs';
 import RecentJobs from './components/RecentJobs';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../types/Navigation';
 
@@ -24,12 +24,20 @@ const Home = () => {
       keyword: '',
     });
   };
+
+  const ScrollViewRef = useRef<ScrollView>(null);
+  useFocusEffect(
+    useCallback(() => {
+      ScrollViewRef.current?.scrollTo({ y: 0, animated: false });
+    }, []),
+  );
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.safeArea}>
         <CommonHeader DrawerIcon SearchBar BellIcon onSearch={handleOnSearch} />
         <ScrollView
           style={styles.scroll}
+          ref={ScrollViewRef}
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >

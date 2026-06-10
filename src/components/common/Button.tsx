@@ -23,14 +23,14 @@ interface CommonButtonProps {
   loading?: boolean;
 
   variant?:
-  | 'default'
-  | 'outline'
-  | 'filled'
-  | 'borderless'
-  | 'destructive'
-  | 'success'
-  | 'primary'
-  | 'gradient';
+    | 'default'
+    | 'outline'
+    | 'filled'
+    | 'borderless'
+    | 'destructive'
+    | 'success'
+    | 'primary'
+    | 'gradient';
 
   width?: DimensionValue;
   height?: DimensionValue;
@@ -119,7 +119,11 @@ const Button: React.FC<CommonButtonProps> = ({
           colors={COLORS.gradients.primary}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
-          style={[styles.gradientFill, styles[size as keyof typeof styles] as ViewStyle]}
+          style={[
+            styles.gradientFill,
+            styles[size as keyof typeof styles] as ViewStyle,
+            { width: '100%', height: resolvedHeight },
+          ]}
         >
           {buttonContent}
         </LinearGradient>
@@ -224,7 +228,7 @@ const styles = StyleSheet.create({
   },
 
   primary: {
-    backgroundColor: COLORS.secondary,
+    backgroundColor: COLORS.cyan500,
   },
 
   outline: {

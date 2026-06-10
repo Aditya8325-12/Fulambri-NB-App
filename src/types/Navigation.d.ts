@@ -18,4 +18,8 @@ export type DrawerParamList = {
     ADD?: boolean;
     title?: string;
   };
+  PdfView: {
+    uri: string;
+    name: string;
+  };
 };
