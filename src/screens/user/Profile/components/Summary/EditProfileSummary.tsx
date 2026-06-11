@@ -1,17 +1,9 @@
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 
-import COLORS from '../../../../constants/colors';
-import { FONT_FAMILY } from '../../../../constants/fonts';
-import Button from '../../../../components/common/Button';
+import COLORS from '../../../../../constants/colors';
+import { FONT_FAMILY } from '../../../../../constants/fonts';
+import Button from '../../../../../components/common/Button';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -31,11 +23,7 @@ const EditProfileSummary = ({ EDIT, ADD }: EditProps) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.root}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 70}
-    >
+    <View style={styles.root}>
       {/* ── Scrollable content ───────────────────── */}
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -82,7 +70,7 @@ const EditProfileSummary = ({ EDIT, ADD }: EditProps) => {
           onPress={handleSave}
         />
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 

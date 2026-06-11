@@ -4,16 +4,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CommonHeader from '../../../components/common/CommonHeader';
 import { useFocusEffect } from '@react-navigation/native';
 
-import PersonalInfo from './components/PersonalInfo';
-import ResumeSection from './components/ResumeSection';
-import ProfileSummary from './components/ProfileSummary';
-import ExperienceSection from './components/ExperienceSection';
-import SkillsSection from './components/SkillsSection';
-import LanguagesSection from './components/LanguagesSection';
-import EducationSection from './components/EducationSection';
-import ProjectsSection from './components/ProjectsSection';
-import AchievementsSection from './components/AchievementsSection';
-import CompetitiveExamsSection from './components/CompetitiveExamsSection';
+import PersonalInfo from './components/PersonalInfo/PersonalInfo';
+import ResumeSection from './components/Resume/ResumeSection';
+import ProfileSummary from './components/Summary/ProfileSummary';
+import ExperienceSection from './components/Experience/ExperienceSection';
+import SkillsSection from './components/Skills/SkillsSection';
+import LanguagesSection from './components/Languages/LanguagesSection';
+import EducationSection from './components/Education/EducationSection';
+import ProjectsSection from './components/Projects/ProjectsSection';
+import AchievementsSection from './components/Achievements/AchievementsSection';
+import CompetitiveExamsSection from './components/CompetitiveExams/CompetitiveExamsSection';
 
 const ProfileScreen: React.FC = () => {
   const ScrollViewRef = useRef<ScrollView>(null);

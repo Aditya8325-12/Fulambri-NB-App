@@ -1,13 +1,25 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, { useCallback, useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../../types/Navigation';
 import CommonHeader from '../../../components/common/CommonHeader';
-import PersonalInfo from './components/EditPersonalInfo';
+import PersonalInfo from './components/PersonalInfo/EditPersonalInfo';
 import { useFocusEffect } from '@react-navigation/native';
-import ProfileSummary from './components/ProfileSummary';
-import EditProfileSummary from './components/EditProfileSummary';
+import EditProfileSummary from './components/Summary/EditProfileSummary';
+import EditExperienceSection from './components/Experience/EditExperienceSection';
+import EditSkillsSection from './components/Skills/EditSkillsSection';
+import LanguagesSection from './components/Languages/LanguagesSection';
+import EditLanguagesSection from './components/Languages/EditLanguagesSection';
+import EditEducationSection from './components/Education/EditEducationSection';
+import EditProjectsSection from './components/Projects/EditProjectsSection';
 
 type Props = DrawerScreenProps<DrawerParamList, 'EditProfile'>;
 
@@ -30,17 +42,36 @@ const EditProfile = ({ route }: Props) => {
         title={ADD ? 'Add ' + title : EDIT ? 'Edit ' + title : title}
       />
 
-      <ScrollView
-        ref={ScrollViewRef}
-        style={styles.scroll}
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 70}
       >
-        {title === 'Personal Info' && <PersonalInfo EDIT={EDIT} ADD={ADD} />}
-        {title === 'Profile Summary' && (
-          <EditProfileSummary EDIT={EDIT} ADD={ADD} />
-        )}
-      </ScrollView>
+        <ScrollView
+          ref={ScrollViewRef}
+          style={styles.scroll}
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          {title === 'Personal Info' && <PersonalInfo EDIT={EDIT} ADD={ADD} />}
+          {title === 'Profile Summary' && (
+            <EditProfileSummary EDIT={EDIT} ADD={ADD} />
+          )}
+          {title === 'Experience' && (
+            <EditExperienceSection EDIT={EDIT} ADD={ADD} />
+          )}
+          {title === 'Skills' && <EditSkillsSection EDIT={EDIT} ADD={ADD} />}
+          {title === 'Languages' && (
+            <EditLanguagesSection EDIT={EDIT} ADD={ADD} />
+          )}
+          {title === 'Education' && (
+            <EditEducationSection EDIT={EDIT} ADD={ADD} />
+          )}
+          {title === 'Projects' && (
+            <EditProjectsSection EDIT={EDIT} ADD={ADD} />
+          )}
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

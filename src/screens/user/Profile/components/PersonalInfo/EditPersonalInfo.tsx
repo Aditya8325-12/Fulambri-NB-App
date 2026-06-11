@@ -19,11 +19,11 @@ import {
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import { Profilestyles } from '../Styles/ProfileStyle';
-import Input from '../../../../components/common/Input';
-import COLORS from '../../../../constants/colors';
-import { FONT_FAMILY } from '../../../../constants/fonts';
-import Button from '../../../../components/common/Button';
+import { Profilestyles } from '../../Styles/ProfileStyle';
+import Input from '../../../../../components/common/Input';
+import COLORS from '../../../../../constants/colors';
+import { FONT_FAMILY } from '../../../../../constants/fonts';
+import Button from '../../../../../components/common/Button';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 

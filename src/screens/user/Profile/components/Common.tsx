@@ -46,7 +46,7 @@ export const SectionTitle: React.FC<{
       {addbtn && (
         <TouchableOpacity style={Profilestyles.Chip} onPress={onAddClick}>
           <Icon name="plus" size={16} color={COLORS.primary} />
-          <Text style={Profilestyles.ChipText}>Add {title}</Text>
+          <Text style={Profilestyles.ChipText}>Add </Text>
         </TouchableOpacity>
       )}
     </View>

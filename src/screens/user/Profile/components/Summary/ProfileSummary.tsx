@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import { Divider, SectionCard, SectionTitle } from './Common';
-import { Profilestyles } from '../Styles/ProfileStyle';
+import { Divider, SectionCard, SectionTitle } from '../Common';
+import { Profilestyles } from '../../Styles/ProfileStyle';
 
 const ProfileSummary = () => {
   return (

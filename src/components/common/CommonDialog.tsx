@@ -115,19 +115,19 @@ export default function CommonDialog({
                   onPress={handleDismiss}
                   disabled={loading}
                   label={cancelText}
-                  height={44}
+                  height={38}
                 />
               </View>
 
               {onSave && (
                 <View style={styles.buttonWrapper}>
                   <Button
-                    variant="default" // standard primary color
+                    variant="gradient" // standard primary color
                     onPress={handleSave}
                     disabled={loading}
                     loading={loading}
                     label={saveText}
-                    height={44}
+                    height={38}
                   />
                 </View>
               )}
@@ -144,12 +144,10 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     borderRadius: 6,
     maxHeight: '85%',
-    paddingVertical: 20,
+    paddingBottom: 16,
     paddingHorizontal: 24,
   },
-  header: {
-    marginBottom: 16,
-  },
+  header: {},
   title: {
     ...TYPOGRAPHY.subHeading,
     color: COLORS.gray800,

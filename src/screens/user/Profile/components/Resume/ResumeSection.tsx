@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import { keepLocalCopy, pick } from '@react-native-documents/picker';
 
-import { Divider, SectionCard, SectionTitle } from './Common';
-import { Profilestyles } from '../Styles/ProfileStyle';
+import { Divider, SectionCard, SectionTitle } from './../Common';
+import { Profilestyles } from '../../Styles/ProfileStyle';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import COLORS from '../../../../constants/colors';
+import COLORS from '../../../../../constants/colors';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { DrawerParamList } from '../../../../types/Navigation';
-import CommonDialog from '../../../../components/common/CommonDialog';
+import { DrawerParamList } from '../../../../../types/Navigation';
+import CommonDialog from '../../../../../components/common/CommonDialog';
 
 interface ResumeFile {
   name: string;
