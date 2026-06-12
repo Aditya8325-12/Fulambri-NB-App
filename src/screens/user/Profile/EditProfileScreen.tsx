@@ -20,6 +20,8 @@ import LanguagesSection from './components/Languages/LanguagesSection';
 import EditLanguagesSection from './components/Languages/EditLanguagesSection';
 import EditEducationSection from './components/Education/EditEducationSection';
 import EditProjectsSection from './components/Projects/EditProjectsSection';
+import EditAchievementsSection from './components/Achievements/EditAchievementsSection';
+import EditCompetitiveExamsSection from './components/CompetitiveExams/EditCompetitiveExamsSection';
 
 type Props = DrawerScreenProps<DrawerParamList, 'EditProfile'>;
 
@@ -44,8 +46,8 @@ const EditProfile = ({ route }: Props) => {
 
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 70}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
       >
         <ScrollView
           ref={ScrollViewRef}
@@ -69,6 +71,12 @@ const EditProfile = ({ route }: Props) => {
           )}
           {title === 'Projects' && (
             <EditProjectsSection EDIT={EDIT} ADD={ADD} />
+          )}
+          {title === 'Achievements' && (
+            <EditAchievementsSection EDIT={EDIT} ADD={ADD} />
+          )}
+          {title === 'Competitive Exams' && (
+            <EditCompetitiveExamsSection EDIT={EDIT} ADD={ADD} />
           )}
         </ScrollView>
       </KeyboardAvoidingView>

@@ -144,7 +144,7 @@ const EditPersonalInfo = ({ EDIT, ADD }: PersonalInfoProps) => {
         <Input
           label="Full Name"
           placeholder="Enter your full name"
-          height={48}
+          height={38}
           required
           type="default"
           value={name}
@@ -154,7 +154,7 @@ const EditPersonalInfo = ({ EDIT, ADD }: PersonalInfoProps) => {
         <Input
           label="Professional Title"
           placeholder="e.g. Senior Software Engineer"
-          height={48}
+          height={38}
           required
           type="default"
           value={title}
@@ -164,7 +164,7 @@ const EditPersonalInfo = ({ EDIT, ADD }: PersonalInfoProps) => {
         <Input
           label="Location"
           placeholder="City, State, Country"
-          height={48}
+          height={38}
           required
           type="default"
           value={location}
@@ -226,7 +226,7 @@ const EditPersonalInfo = ({ EDIT, ADD }: PersonalInfoProps) => {
         <Input
           label="Email Address"
           placeholder="you@example.com"
-          height={48}
+          height={38}
           required
           type="email-address"
           value={email}
@@ -239,7 +239,7 @@ const EditPersonalInfo = ({ EDIT, ADD }: PersonalInfoProps) => {
         <Input
           label="Phone Number"
           placeholder="+91 00000 00000"
-          height={48}
+          height={38}
           required
           type="number-pad"
           value={phone}
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
   dobField: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 48,
+    height: 38,
     borderWidth: 1.5,
     borderColor: COLORS.gray200,
     borderRadius: 6,

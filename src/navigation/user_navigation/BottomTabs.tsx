@@ -4,16 +4,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from '../../screens/user/Home/HomeScreen';
 import Jobs from '../../screens/user/Jobs/JobsScreen';
-import Notification from '../../screens/user/Notification/NotificationScreen';
 import { FONT_FAMILY } from '../../constants/fonts';
 import COLORS from '../../constants/colors';
 import Profile from '../../screens/user/Profile/ProfileScreen';
+import Applications from '../../screens/user/Applications/ApplicationsScreen';
 export type BottomTabParamList = {
   Home: undefined;
   Jobs: {
     keyword?: string;
   };
-  Alerts: undefined;
+  Applications: undefined;
   Profile: undefined;
 };
 
@@ -75,12 +75,14 @@ const BottomTabs = () => {
         }}
       />
       <Tab.Screen
-        name="Alerts"
-        component={Notification}
+        name="Applications"
+        component={Applications}
         options={{
           tabBarIcon: ({ focused }) => (
             <TabIcon
-              iconName={focused ? 'bell' : 'bell-outline'}
+              iconName={
+                focused ? 'briefcase-search' : 'briefcase-search-outline'
+              }
               focused={focused}
             />
           ),

@@ -10,7 +10,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../../../constants/colors';
 import { FONT_FAMILY } from '../../../../../constants/fonts';
 import { Divider, SectionCard, SectionTitle } from '../Common';
-import { RootViewNativeProps } from 'react-native-gesture-handler/lib/typescript/specs/RNGestureHandlerRootViewNativeComponent';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { DrawerParamList } from '../../../../../types/Navigation';
 import CommonDialog from '../../../../../components/common/CommonDialog';

@@ -80,6 +80,9 @@ const CustomDrawerContent = (props: any) => {
     if (itemId === 'settings') {
       props.navigation.navigate('Settings');
     }
+    if (itemId === 'job_alerts') {
+      props.navigation.navigate('Alert');
+    }
   };
 
   const handleEditProfile = () => {

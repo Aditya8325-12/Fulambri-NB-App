@@ -83,27 +83,38 @@ const FeaturedCard = ({ item }: { item: (typeof FEATURED_JOBS)[0] }) => (
   </TouchableOpacity>
 );
 
+const SNAP_INTERVAL = CARD_WIDTH + 14; // card width + gap
+
 const FeaturedJobs = () => {
   return (
-    <View>
+    <>
       <SectionHeader title="Featured Jobs" />
-      <FlatList
-        data={FEATURED_JOBS}
-        keyExtractor={item => item.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.featuredList}
-        renderItem={({ item }) => <FeaturedCard item={item} />}
-      />
-    </View>
+      <View style={styles.flatListWrapper}>
+        <FlatList
+          data={FEATURED_JOBS}
+          keyExtractor={item => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.featuredList}
+          renderItem={({ item }) => <FeaturedCard item={item} />}
+          snapToInterval={SNAP_INTERVAL}
+          snapToAlignment="start"
+          decelerationRate="fast"
+        />
+      </View>
+    </>
   );
 };
 
 export default FeaturedJobs;
 
 const styles = StyleSheet.create({
+  flatListWrapper: {
+    marginHorizontal: -16,
+  },
   featuredList: {
     paddingBottom: 20,
+    paddingHorizontal: 16,
     gap: 14,
   },
   featuredCard: {

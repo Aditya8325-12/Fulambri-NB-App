@@ -66,7 +66,7 @@ const EducationSection = () => {
   return (
     <SectionCard>
       <SectionTitle title="Education" addbtn />
-      <Divider />{' '}
+      <Divider />
       <CommonDialog
         open={dialog.visible}
         onOpenChange={visible => setDialog(prev => ({ ...prev, visible }))}

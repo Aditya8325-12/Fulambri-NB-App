@@ -6,6 +6,9 @@ import Setting from '../../screens/user/Setting/SettingScreen';
 import EditProfile from '../../screens/user/Profile/EditProfileScreen';
 import { DrawerParamList } from '../../types/Navigation';
 import PdfViewerScreen from '../../screens/common/PdfViewerScreen';
+import Notification from '../../screens/user/Notification/NotificationScreen';
+import ApplicationDetails from '../../screens/user/Applications/ApplicationDetails';
+import JobDetailsScreen from '../../screens/user/Jobs/JobDetailsScreen';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -48,6 +51,30 @@ const DrawerNavigator = () => {
         component={PdfViewerScreen}
         options={{
           drawerLabel: 'PDF',
+        }}
+      />
+      <Drawer.Screen
+        name="Alert"
+        component={Notification}
+        options={{
+          drawerLabel: 'Alert',
+        }}
+      />
+
+      {/* Application  */}
+      <Drawer.Screen
+        name="ApplicationDetails"
+        component={ApplicationDetails}
+        options={{
+          drawerLabel: 'Alert',
+        }}
+      />
+      {/* Job Details  */}
+      <Drawer.Screen
+        name="JobDetailsScreen"
+        component={JobDetailsScreen}
+        options={{
+          drawerLabel: 'Alert',
         }}
       />
     </Drawer.Navigator>

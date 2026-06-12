@@ -5,10 +5,20 @@ import { FONT_FAMILY, FONT_SIZE } from '../../../../constants/fonts';
 import COLORS from '../../../../constants/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { DrawerParamList } from '../../../../types/Navigation';
 
 const JobCard = ({ item }: { item: (typeof JOB_LISTINGS)[0] }) => {
+  const navgation = useNavigation<NavigationProp<DrawerParamList>>();
+  const handlePress = () => {
+    navgation.navigate('JobDetailsScreen');
+  };
   return (
-    <TouchableOpacity style={styles.jobCard} activeOpacity={0.82}>
+    <TouchableOpacity
+      style={styles.jobCard}
+      activeOpacity={0.82}
+      onPress={handlePress}
+    >
       <View style={styles.jobCardTop}>
         {/* Logo */}
         <View style={[styles.jobLogo, { backgroundColor: '#EFF6FF' }]}>

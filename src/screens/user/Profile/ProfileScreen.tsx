@@ -25,12 +25,12 @@ const ProfileScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-      <CommonHeader title="Profile" DrawerIcon BellIcon />
+      <CommonHeader title="Profile" DrawerIcon BellIcon MessageIcon />
       <ScrollView
-        style={styles.scroll}
         ref={ScrollViewRef}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
       >
         <PersonalInfo />
         <ResumeSection />
@@ -42,7 +42,7 @@ const ProfileScreen: React.FC = () => {
         <ProjectsSection />
         <AchievementsSection />
         <CompetitiveExamsSection />
-        <View style={{ height: 24 }} />
+        <View style={{ height: 48 }} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -54,14 +54,16 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: '#F4F6F8',
   },
-  scroll: {
-    flex: 1,
-  },
+  // scroll: {
+  //   flex: 1,
+  //   backgroundColor: '#0bc71bff',
+  // },
   scrollContent: {
     paddingHorizontal: 16,
     paddingBottom: 16,
+    paddingTop: 4,
   },
 });

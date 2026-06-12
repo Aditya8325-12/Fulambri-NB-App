@@ -22,4 +22,7 @@ export type DrawerParamList = {
     uri: string;
     name: string;
   };
+  Alert: undefined;
+  JobDetailsScreen: undefined;
+  ApplicationDetails: undefined;
 };
