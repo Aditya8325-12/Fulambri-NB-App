@@ -11,7 +11,13 @@ import { DrawerParamList } from '../../../../types/Navigation';
 const JobCard = ({ item }: { item: (typeof JOB_LISTINGS)[0] }) => {
   const navgation = useNavigation<NavigationProp<DrawerParamList>>();
   const handlePress = () => {
-    navgation.navigate('JobDetailsScreen');
+    navgation.navigate('JobsStack', { screen: 'JobDetailsScreen' } as any);
+  };
+  const handleApplyNow = () => {
+    navgation.navigate('JobsStack', {
+      screen: 'ApplyJob',
+      params: { job: item },
+    } as any);
   };
   return (
     <TouchableOpacity
@@ -72,7 +78,11 @@ const JobCard = ({ item }: { item: (typeof JOB_LISTINGS)[0] }) => {
           <Text style={styles.jobSalary}>{item.salary}</Text>
           <Text style={styles.jobPosted}>{item.postedTime}</Text>
         </View>
-        <TouchableOpacity style={styles.applyBtnContainer} activeOpacity={0.85}>
+        <TouchableOpacity
+          onPress={handleApplyNow}
+          style={styles.applyBtnContainer}
+          activeOpacity={0.85}
+        >
           <LinearGradient
             colors={COLORS.gradients.primary}
             start={{ x: 0, y: 0 }}

@@ -39,6 +39,8 @@ interface CommonHeaderProps {
   messageCount?: number;
   /** Show back arrow instead of drawer */
   BackIcon?: boolean;
+  /** Callback when back icon is pressed */
+  onBackPress?: () => void;
   /** Show hamburger/drawer icon */
   DrawerIcon?: boolean;
   /** Show notification bell */
@@ -315,6 +317,7 @@ const CommonHeader = ({
   onMessage,
   messageCount = 0,
   BackIcon,
+  onBackPress,
   DrawerIcon,
   BellIcon,
   SearchBar: showSearchBar,
@@ -354,7 +357,7 @@ const CommonHeader = ({
               name="arrow-left"
               size={26}
               color={COLORS.gray700}
-              onPress={() => navigation.goBack()}
+              onPress={onBackPress ? onBackPress : () => navigation.goBack()}
             />
           )}
         </View>

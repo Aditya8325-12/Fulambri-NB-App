@@ -83,12 +83,15 @@ const CustomDrawerContent = (props: any) => {
     if (itemId === 'job_alerts') {
       props.navigation.navigate('Alert');
     }
+    if (itemId === 'saved_jobs') {
+      props.navigation.navigate('JobsStack', { screen: 'SaveJob' });
+    }
   };
 
   const handleEditProfile = () => {
     props.navigation.closeDrawer();
     // Navigate to profile edit screen
-    // props.navigation.navigate('EditProfile');
+    props.navigation.navigate('MainTabs', { screen: 'Profile' });
   };
 
   const handleLogout = async () => {

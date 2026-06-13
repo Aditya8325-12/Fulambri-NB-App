@@ -23,6 +23,6 @@ export type DrawerParamList = {
     name: string;
   };
   Alert: undefined;
-  JobDetailsScreen: undefined;
   ApplicationDetails: undefined;
+  JobsStack: undefined;
 };

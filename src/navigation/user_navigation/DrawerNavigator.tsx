@@ -8,7 +8,7 @@ import { DrawerParamList } from '../../types/Navigation';
 import PdfViewerScreen from '../../screens/common/PdfViewerScreen';
 import Notification from '../../screens/user/Notification/NotificationScreen';
 import ApplicationDetails from '../../screens/user/Applications/ApplicationDetails';
-import JobDetailsScreen from '../../screens/user/Jobs/JobDetailsScreen';
+import JobsStackNavigator from './JobsStackNavigator';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -69,12 +69,12 @@ const DrawerNavigator = () => {
           drawerLabel: 'Alert',
         }}
       />
-      {/* Job Details  */}
+      {/* Jobs flow: JobDetails → ApplyJob → ApplicationSubmit (Stack) */}
       <Drawer.Screen
-        name="JobDetailsScreen"
-        component={JobDetailsScreen}
+        name="JobsStack"
+        component={JobsStackNavigator}
         options={{
-          drawerLabel: 'Alert',
+          drawerLabel: 'Jobs',
         }}
       />
     </Drawer.Navigator>

@@ -1,3 +1,5 @@
+import { JobDetail } from '../types/JobDetailsType';
+
 export const QUICK_CATEGORIES = [
   { id: '1', label: 'Software Engineer', active: true },
   { id: '2', label: 'Data Analyst', active: false },
@@ -84,3 +86,30 @@ export const JOB_LISTINGS = [
     logoIconColor: '#DC2626',
   },
 ];
+
+// ─── Sample Job details  Data ──────────────────────────────────────────────────────────
+export const JOB_DETAIL: JobDetail = {
+  id: '1',
+  title: 'Senior Software Engineer',
+  company: 'Tech Innovators Corp',
+  location: 'Vikhroli West, Mumbai, Maharashtra 400079',
+  ctc: '₹15L – 25L',
+  employmentType: 'Full Time',
+  experience: '5+ Years',
+  applyBy: '30 Nov',
+  workMode: 'Hybrid',
+  department: 'Engineering',
+  description:
+    'We are looking for a Senior Software Engineer to join our core product team. You will be responsible for building highly scalable systems and leading technical initiatives that impact millions of users. You should be passionate about clean code and modern architecture.',
+  responsibilities: [
+    'Develop and maintain scalable web applications using React and Node.js.',
+    'Lead technical team meetings and architectural design sessions.',
+    'Implement robust security and data protection measures across the stack.',
+    'Mentor junior developers through code reviews and documentation.',
+  ],
+  benefitsTitle: 'Premium Benefits Package',
+  benefits: [
+    'Health Insurance, Performance Bonus, Paid Learning & Remote-first flexible culture.',
+  ],
+  skillsRequired: ['React.js', 'Node.js', 'AWS Cloud', 'TypeScript', 'Docker'],
+};
