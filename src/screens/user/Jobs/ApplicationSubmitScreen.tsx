@@ -3,7 +3,11 @@ import { StyleSheet, Text, View, ScrollView, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
-import { useNavigation, StackActions } from '@react-navigation/native';
+import {
+  useNavigation,
+  StackActions,
+  CommonActions,
+} from '@react-navigation/native';
 
 import COLORS from '../../../constants/colors';
 import { FONT_FAMILY, FONT_SIZE } from '../../../constants/fonts';
@@ -35,17 +39,27 @@ const ApplicationSubmitScreen = () => {
   }, []);
 
   const handleViewApplications = () => {
-    navigation.dispatch(StackActions.popToTop());
-    navigation.navigate('MainTabs', {
-      screen: 'Applications',
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'JobDetailsScreen' }],
     });
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: 'Applications', // Your Jobs tab name
+      }),
+    );
   };
 
   const handleBrowseJobs = () => {
-    navigation.dispatch(StackActions.popToTop());
-    navigation.navigate('MainTabs', {
-      screen: 'Jobs',
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'JobDetailsScreen' }],
     });
+    navigation.dispatch(
+      CommonActions.navigate('MainTabs', {
+        name: 'Jobs', // Your Jobs tab name
+      }),
+    );
   };
 
   return (

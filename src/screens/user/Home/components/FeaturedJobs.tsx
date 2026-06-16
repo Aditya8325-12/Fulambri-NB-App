@@ -9,6 +9,7 @@ import {
 import React from 'react';
 import { FONT_FAMILY, FONT_SIZE } from '../../../../constants/fonts';
 import { SectionHeader } from './SectionHeader';
+import { useNavigation } from '@react-navigation/native';
 
 const CARD_WIDTH = Dimensions.get('window').width * 0.62;
 
@@ -48,9 +49,18 @@ const FEATURED_JOBS = [
   },
 ];
 
-const FeaturedCard = ({ item }: { item: (typeof FEATURED_JOBS)[0] }) => (
+const FeaturedCard = ({
+  item,
+  handleJobDetails,
+  handleApplyJob,
+}: {
+  item: (typeof FEATURED_JOBS)[0];
+  handleJobDetails: () => void;
+  handleApplyJob: () => void;
+}) => (
   <TouchableOpacity
     activeOpacity={0.9}
+    onPress={handleJobDetails}
     style={[styles.featuredCard, { backgroundColor: item.color }]}
   >
     {/* Type Badge */}
@@ -76,7 +86,7 @@ const FeaturedCard = ({ item }: { item: (typeof FEATURED_JOBS)[0] }) => (
       <Text style={styles.featuredSalary}>
         {item.salaryMin} - {item.salaryMax}
       </Text>
-      <TouchableOpacity style={styles.applyBtn}>
+      <TouchableOpacity style={styles.applyBtn} onPress={handleApplyJob}>
         <Text style={styles.applyBtnText}>Apply Now</Text>
       </TouchableOpacity>
     </View>
@@ -86,6 +96,23 @@ const FeaturedCard = ({ item }: { item: (typeof FEATURED_JOBS)[0] }) => (
 const SNAP_INTERVAL = CARD_WIDTH + 14; // card width + gap
 
 const FeaturedJobs = () => {
+  const navigation = useNavigation<any>();
+
+  const handleJobDetails = () => {
+    navigation.navigate('JobsStack', {
+      screen: 'JobDetailsScreen',
+      params: { fromSaveJob: false },
+    });
+  };
+
+  const handleApplyJob = () => {
+    navigation.navigate('JobsStack', {
+      screen: 'ApplyJob',
+      params: { fromJobDetails: false },
+      initial: false,
+    } as any);
+  };
+
   return (
     <>
       <SectionHeader title="Featured Jobs" />
@@ -96,7 +123,13 @@ const FeaturedJobs = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.featuredList}
-          renderItem={({ item }) => <FeaturedCard item={item} />}
+          renderItem={({ item }) => (
+            <FeaturedCard
+              item={item}
+              handleJobDetails={handleJobDetails}
+              handleApplyJob={handleApplyJob}
+            />
+          )}
           snapToInterval={SNAP_INTERVAL}
           snapToAlignment="start"
           decelerationRate="fast"

@@ -23,15 +23,16 @@ import {
   SectionHeader,
   SkillChip,
 } from './components/JobDetails';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { JobsStackParamList } from '../../../navigation/user_navigation/JobsStackNavigator';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 // ─── Main Screen ──────────────────────────────────────────────────────────────
 const JobDetailsScreen = () => {
   const [saved, setSaved] = useState(false);
   const saveScale = useRef(new Animated.Value(1)).current;
   const job = JOB_DETAIL;
-  const navigation = useNavigation<NavigationProp<JobsStackParamList>>();
+  const route = useRoute<any>();
+  const fromSaveJob = route.params?.fromSaveJob || false;
+  const navigation = useNavigation<any>();
 
   const handleSave = () => {
     Animated.sequence([
@@ -50,13 +51,29 @@ const JobDetailsScreen = () => {
   };
 
   const handleApplyBtn = () => {
-    navigation.navigate('ApplyJob', { job });
+    navigation.navigate('ApplyJob', { job, fromJobDetails: true });
+  };
+
+  const handleBackPress = () => {
+    if (navigation.canGoBack() && fromSaveJob) {
+      navigation.goBack();
+    } else {
+      navigation.navigate('MainTabs', {
+        screen: 'Jobs',
+      } as any);
+    }
   };
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
-      <CommonHeader BackIcon BellIcon MessageIcon title="Job details" />
+      <CommonHeader
+        BackIcon
+        onBackPress={handleBackPress}
+        BellIcon
+        MessageIcon
+        title="Job details"
+      />
 
       <ScrollView
         contentContainerStyle={styles.scrollContent}

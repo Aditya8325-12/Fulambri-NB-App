@@ -8,17 +8,16 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
-  ActivityIndicator,
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import LinearGradient from 'react-native-linear-gradient';
 import {
   useNavigation,
   useRoute,
   RouteProp,
-  NavigationProp,
+  StackActions,
+  CommonActions,
 } from '@react-navigation/native';
 import { JobsStackParamList } from '../../../navigation/user_navigation/JobsStackNavigator';
 import { pick, keepLocalCopy } from '@react-native-documents/picker';
@@ -29,7 +28,6 @@ import { FONT_FAMILY, FONT_SIZE } from '../../../constants/fonts';
 import CommonHeader from '../../../components/common/CommonHeader';
 import { JOB_DETAIL } from './SampleData/Data';
 import Button from '../../../components/common/Button';
-import { DrawerParamList } from '../../../types/Navigation';
 
 interface ResumeFile {
   name: string;
@@ -38,11 +36,20 @@ interface ResumeFile {
 }
 
 const ApplyJobScreen = () => {
-  const navigation = useNavigation<NavigationProp<JobsStackParamList>>();
+  // const navigation = useNavigation<NavigationProp<JobsStackParamList>>();
+  const navigation = useNavigation<any>();
   const route = useRoute<RouteProp<JobsStackParamList, 'ApplyJob'>>();
 
   // Use passed job parameter or fallback to the sample job detail
   const job = route.params?.job || JOB_DETAIL;
+  const fromJobDetails = route.params?.fromJobDetails || false;
+  const fromSaveJob = route.params?.fromSaveJob || false;
+
+  Toast.show({
+    type: 'success',
+    text1: 'Job Applied',
+    text2: ' job detail ' + fromJobDetails,
+  });
 
   // Form states
   const [testInput, setTestInput] = useState('');
@@ -141,7 +148,7 @@ const ApplyJobScreen = () => {
         text1: 'Application Confirmed',
         text2: 'Your application was successfully submitted!',
       });
-      navigation.navigate('ApplicationSubmit');
+      navigation.dispatch(StackActions.replace('ApplicationSubmit'));
     }, 1500);
   };
 
@@ -153,13 +160,25 @@ const ApplyJobScreen = () => {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
+  const handleBackPress = () => {
+    if (fromJobDetails || fromSaveJob) {
+      navigation.goBack();
+    } else {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'JobDetailsScreen' }],
+      });
+      navigation.dispatch(
+        CommonActions.navigate('MainTabs', {
+          name: 'Jobs', // Your Jobs tab name
+        }),
+      );
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <CommonHeader
-        BackIcon
-        onBackPress={() => navigation.goBack()}
-        title="Apply Job"
-      />
+      <CommonHeader BackIcon onBackPress={handleBackPress} title="Apply Job" />
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -375,7 +394,7 @@ const ApplyJobScreen = () => {
           label="cancel"
           size="md"
           width={'30%'}
-          onPress={() => navigation.goBack()}
+          onPress={handleBackPress}
         />
         <Button
           variant="gradient"

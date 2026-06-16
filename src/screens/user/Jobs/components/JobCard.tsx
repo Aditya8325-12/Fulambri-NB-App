@@ -9,14 +9,18 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { DrawerParamList } from '../../../../types/Navigation';
 
 const JobCard = ({ item }: { item: (typeof JOB_LISTINGS)[0] }) => {
-  const navgation = useNavigation<NavigationProp<DrawerParamList>>();
+  const navigation = useNavigation<any>();
   const handlePress = () => {
-    navgation.navigate('JobsStack', { screen: 'JobDetailsScreen' } as any);
+    navigation.navigate('JobsStack', {
+      screen: 'JobDetailsScreen',
+      params: { fromSaveJob: false },
+    } as any);
   };
   const handleApplyNow = () => {
-    navgation.navigate('JobsStack', {
+    navigation.navigate('JobsStack', {
       screen: 'ApplyJob',
-      params: { job: item },
+      params: { job: item, fromJobDetails: false },
+      initial: false,
     } as any);
   };
   return (

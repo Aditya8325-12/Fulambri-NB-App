@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet, Pressable, Text, Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from '../../screens/user/Home/HomeScreen';
 import Jobs from '../../screens/user/Jobs/JobsScreen';
-import { FONT_FAMILY } from '../../constants/fonts';
+import { FONT_FAMILY, FONT_SIZE } from '../../constants/fonts';
 import COLORS from '../../constants/colors';
 import Profile from '../../screens/user/Profile/ProfileScreen';
 import Applications from '../../screens/user/Applications/ApplicationsScreen';
+
 export type BottomTabParamList = {
   Home: undefined;
   Jobs: {
@@ -19,18 +20,36 @@ export type BottomTabParamList = {
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-type TabIconProps = {
+type TabButtonProps = {
   iconName: string;
+  iconNameActive: string;
+  label: string;
   focused: boolean;
 };
 
-const TabIcon = ({ iconName, focused }: TabIconProps) => (
-  <View style={[styles.iconWrapper, focused && styles.iconWrapperActive]}>
-    <Icon
-      name={iconName}
-      size={24}
-      color={focused ? COLORS.primary : COLORS.Icon_Inactive}
-    />
+const TabButton = ({
+  iconName,
+  iconNameActive,
+  label,
+  focused,
+}: TabButtonProps) => (
+  <View style={styles.tabButtonContainer}>
+    <View style={[styles.iconPill]}>
+      <Icon
+        name={focused ? iconNameActive : iconName}
+        size={22}
+        color={focused ? COLORS.primary : COLORS.Icon_Inactive}
+      />
+    </View>
+    <Text
+      style={[
+        styles.tabLabel,
+        focused ? styles.tabLabelActive : styles.tabLabelInactive,
+      ]}
+      numberOfLines={1}
+    >
+      {label}
+    </Text>
   </View>
 );
 
@@ -40,10 +59,9 @@ const BottomTabs = () => {
       initialRouteName="Home"
       screenOptions={{
         tabBarStyle: styles.tabBar,
-        tabBarLabelStyle: styles.tabLabel,
-        tabBarActiveTintColor: COLORS.textNormal,
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: COLORS.primary,
         tabBarInactiveTintColor: COLORS.Icon_Inactive,
-        tabBarIconStyle: { marginBottom: -2 },
         headerShown: false,
         tabBarButton: ({ ref, ...props }) => (
           <Pressable {...props} ref={ref as any} android_ripple={null} />
@@ -55,8 +73,10 @@ const BottomTabs = () => {
         component={Home}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon
-              iconName={focused ? 'home' : 'home-outline'}
+            <TabButton
+              iconName="home-outline"
+              iconNameActive="home"
+              label="Home"
               focused={focused}
             />
           ),
@@ -67,8 +87,10 @@ const BottomTabs = () => {
         component={Jobs}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon
-              iconName={focused ? 'briefcase' : 'briefcase-outline'}
+            <TabButton
+              iconName="briefcase-outline"
+              iconNameActive="briefcase"
+              label="Jobs"
               focused={focused}
             />
           ),
@@ -79,10 +101,10 @@ const BottomTabs = () => {
         component={Applications}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon
-              iconName={
-                focused ? 'briefcase-search' : 'briefcase-search-outline'
-              }
+            <TabButton
+              iconName="file-document-outline"
+              iconNameActive="file-document"
+              label="Applied"
               focused={focused}
             />
           ),
@@ -93,8 +115,10 @@ const BottomTabs = () => {
         component={Profile}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon
-              iconName={focused ? 'account-circle' : 'account-circle-outline'}
+            <TabButton
+              iconName="account-outline"
+              iconNameActive="account"
+              label="Profile"
               focused={focused}
             />
           ),
@@ -107,33 +131,47 @@ const BottomTabs = () => {
 const styles = StyleSheet.create({
   tabBar: {
     backgroundColor: '#FFFFFF',
-    borderTopWidth: 1,
-    borderTopColor: '#E8E8E8',
-    height: 90,
-    paddingBottom: 8,
-    paddingTop: 10,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
+    borderTopWidth: 0,
+    height: Platform.OS === 'ios' ? 88 : 80,
+    paddingTop: 16,
+    paddingBottom: Platform.OS === 'ios' ? 24 : 10,
+    paddingHorizontal: 8,
+    // Premium shadow
+    elevation: 20,
+    shadowColor: '#0891B2',
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 16,
+    // Top separator with gradient feel
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
   },
-  tabLabel: {
-    fontSize: 12,
-    marginTop: 2,
-    fontFamily: FONT_FAMILY.PMedium,
-    // color: '#49454F'
-  },
-  iconWrapper: {
-    width: 48,
-    height: 28,
-    borderRadius: 14,
+  tabButtonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 2,
+    minWidth: 60,
   },
-  iconWrapperActive: {
-    width: 56,
-    borderRadius: 6,
+  iconPill: {
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+  },
+  iconPillActive: {
+    backgroundColor: COLORS.cyan100,
+  },
+  tabLabel: {
+    fontSize: FONT_SIZE.xs,
+    letterSpacing: 0.2,
+  },
+  tabLabelActive: {
+    fontFamily: FONT_FAMILY.PSemiBold,
+    color: COLORS.primary,
+  },
+  tabLabelInactive: {
+    fontFamily: FONT_FAMILY.PRegular,
+    color: COLORS.Icon_Inactive,
   },
 });
 

@@ -9,6 +9,7 @@ import {
 import { FONT_FAMILY, FONT_SIZE } from '../../../../constants/fonts';
 import COLORS from '../../../../constants/colors';
 import { SectionHeader } from './SectionHeader';
+import { useNavigation } from '@react-navigation/native';
 
 const RECENT_POSTINGS = [
   {
@@ -39,8 +40,18 @@ const RECENT_POSTINGS = [
   },
 ];
 
-const RecentPostingCard = ({ item }: { item: (typeof RECENT_POSTINGS)[0] }) => (
-  <TouchableOpacity style={styles.recentCard} activeOpacity={0.8}>
+const RecentPostingCard = ({
+  item,
+  handlePress,
+}: {
+  item: (typeof RECENT_POSTINGS)[0];
+  handlePress: () => void;
+}) => (
+  <TouchableOpacity
+    style={styles.recentCard}
+    activeOpacity={0.8}
+    onPress={handlePress}
+  >
     <View style={[styles.recentIcon, { backgroundColor: item.iconBg }]}>
       <Text style={styles.recentIconText}>{item.icon}</Text>
     </View>
@@ -62,11 +73,23 @@ const RecentPostingCard = ({ item }: { item: (typeof RECENT_POSTINGS)[0] }) => (
 );
 
 const RecentJobs = () => {
+  const navigation = useNavigation<any>();
+
+  const handlePress = () => {
+    navigation.navigate('JobsStack', {
+      screen: 'JobDetailsScreen',
+      params: { fromSaveJob: false },
+    });
+  };
   return (
     <View>
       <SectionHeader title="Recent Postings" />
       {RECENT_POSTINGS.map(item => (
-        <RecentPostingCard key={item.id} item={item} />
+        <RecentPostingCard
+          key={item.id}
+          item={item}
+          handlePress={handlePress}
+        />
       ))}
     </View>
   );

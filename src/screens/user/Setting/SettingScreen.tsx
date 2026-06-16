@@ -6,16 +6,18 @@ import {
   ScrollView,
   TouchableOpacity,
   Switch,
-  Image,
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../../constants/colors';
+import CommonHeader from '../../../components/common/CommonHeader';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
 type SettingRowProps = {
   icon: string;
+  iconColor?: string;
   label: string;
   sublabel?: string;
   onPress?: () => void;
@@ -27,6 +29,7 @@ type SettingRowProps = {
 
 const SettingRow: React.FC<SettingRowProps> = ({
   icon,
+  iconColor,
   label,
   sublabel,
   onPress,
@@ -39,7 +42,11 @@ const SettingRow: React.FC<SettingRowProps> = ({
     style={styles.settingRow}
   >
     <View style={[styles.iconBadge, danger && styles.iconBadgeDanger]}>
-      <Text style={styles.iconText}>{icon}</Text>
+      <Icon
+        name={icon}
+        size={20}
+        color={danger ? COLORS.danger : iconColor ?? COLORS.primary}
+      />
     </View>
     <View style={styles.rowTextWrap}>
       <Text style={[styles.rowLabel, danger && styles.rowLabelDanger]}>
@@ -48,9 +55,11 @@ const SettingRow: React.FC<SettingRowProps> = ({
       {sublabel ? <Text style={styles.rowSublabel}>{sublabel}</Text> : null}
     </View>
     {rightElement ?? (
-      <Text style={[styles.chevron, danger && { color: COLORS.danger }]}>
-        ›
-      </Text>
+      <Icon
+        name="chevron-right"
+        size={22}
+        color={danger ? COLORS.danger : COLORS.gray300}
+      />
     )}
   </TouchableOpacity>
 );
@@ -94,9 +103,7 @@ const Setting = () => {
   return (
     <SafeAreaView style={styles.safe}>
       {/* ── Header ── */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Settings</Text>
-      </View>
+      <CommonHeader BackIcon title="Settings" />
 
       <ScrollView
         style={styles.scroll}
@@ -124,21 +131,21 @@ const Setting = () => {
         <SectionHeader title="ACCOUNT" />
         <View style={styles.card}>
           <SettingRow
-            icon="👤"
+            icon="account-edit-outline"
             label="Edit Profile"
             sublabel="Update your personal details"
             onPress={() => {}}
           />
           <Divider />
           <SettingRow
-            icon="📄"
+            icon="file-document-outline"
             label="Resume"
             sublabel="Manage & upload your resume"
             onPress={() => {}}
           />
           <Divider />
           <SettingRow
-            icon="🔒"
+            icon="lock-outline"
             label="Change Password"
             sublabel="Keep your account secure"
             onPress={() => {}}
@@ -149,7 +156,7 @@ const Setting = () => {
         <SectionHeader title="NOTIFICATIONS" />
         <View style={styles.card}>
           <SettingRow
-            icon="🔔"
+            icon="bell-outline"
             label="Push Notifications"
             sublabel="Receive alerts on your device"
             rightElement={
@@ -163,7 +170,7 @@ const Setting = () => {
           />
           <Divider />
           <SettingRow
-            icon="📧"
+            icon="email-outline"
             label="Email Notifications"
             sublabel="Get updates in your inbox"
             rightElement={
@@ -177,7 +184,7 @@ const Setting = () => {
           />
           <Divider />
           <SettingRow
-            icon="💼"
+            icon="briefcase-outline"
             label="Job Alerts"
             sublabel="Be notified of new job postings"
             rightElement={
@@ -195,21 +202,21 @@ const Setting = () => {
         <SectionHeader title="PREFERENCES" />
         <View style={styles.card}>
           <SettingRow
-            icon="🌍"
+            icon="translate"
             label="Language"
             sublabel="English (US)"
             onPress={() => {}}
           />
           <Divider />
           <SettingRow
-            icon="📍"
+            icon="map-marker-outline"
             label="Location"
             sublabel="Bengaluru, India"
             onPress={() => {}}
           />
           <Divider />
           <SettingRow
-            icon="🎯"
+            icon="tune-variant"
             label="Job Preferences"
             sublabel="Role, industry & salary range"
             onPress={() => {}}
@@ -220,7 +227,7 @@ const Setting = () => {
         <SectionHeader title="APP SETTINGS" />
         <View style={styles.card}>
           <SettingRow
-            icon="🌙"
+            icon="weather-night"
             label="Dark Mode"
             sublabel="Switch to dark theme"
             rightElement={
@@ -233,12 +240,20 @@ const Setting = () => {
             }
           />
           <Divider />
-          <SettingRow icon="🔒" label="Privacy Policy" onPress={() => {}} />
-          <Divider />
-          <SettingRow icon="📋" label="Terms & Conditions" onPress={() => {}} />
+          <SettingRow
+            icon="shield-lock-outline"
+            label="Privacy Policy"
+            onPress={() => {}}
+          />
           <Divider />
           <SettingRow
-            icon="ℹ️"
+            icon="clipboard-text-outline"
+            label="Terms & Conditions"
+            onPress={() => {}}
+          />
+          <Divider />
+          <SettingRow
+            icon="information-outline"
             label="About App"
             sublabel="Version 1.0.0"
             onPress={() => {}}
@@ -246,14 +261,21 @@ const Setting = () => {
         </View>
 
         {/* ── Logout ── */}
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={handleLogout}
-          style={styles.logoutBtn}
-        >
-          <Text style={styles.logoutIcon}>🚪</Text>
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
+        <View style={styles.logoutBtn}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={handleLogout}
+            style={styles.logoutBtn}
+          >
+            <Icon
+              name="logout"
+              size={20}
+              color={COLORS.danger}
+              style={styles.logoutIcon}
+            />
+            <Text style={styles.logoutText}>Logout</Text>
+          </TouchableOpacity>
+        </View>
 
         <View style={{ height: 40 }} />
       </ScrollView>
@@ -300,7 +322,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLORS.white,
-    borderRadius: 16,
+    borderRadius: 8,
     padding: 16,
     marginBottom: 24,
     shadowColor: '#000',
@@ -333,7 +355,7 @@ const styles = StyleSheet.create({
     right: 2,
     width: 14,
     height: 14,
-    borderRadius: 7,
+    borderRadius: 8,
     backgroundColor: COLORS.success,
     borderWidth: 2,
     borderColor: COLORS.white,
@@ -357,7 +379,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.miniPrimary,
     paddingHorizontal: 10,
     paddingVertical: 3,
-    borderRadius: 20,
+    borderRadius: 6,
   },
   profileBadgeText: {
     fontSize: 11,
@@ -378,7 +400,7 @@ const styles = StyleSheet.create({
   // Card
   card: {
     backgroundColor: COLORS.white,
-    borderRadius: 14,
+    borderRadius: 8,
     marginBottom: 20,
     overflow: 'hidden',
     shadowColor: '#000',
@@ -398,7 +420,7 @@ const styles = StyleSheet.create({
   iconBadge: {
     width: 38,
     height: 38,
-    borderRadius: 10,
+    borderRadius: 8,
     backgroundColor: COLORS.backgroundSecondary,
     alignItems: 'center',
     justifyContent: 'center',
@@ -406,9 +428,6 @@ const styles = StyleSheet.create({
   },
   iconBadgeDanger: {
     backgroundColor: '#FEF2F2',
-  },
-  iconText: {
-    fontSize: 18,
   },
   rowTextWrap: {
     flex: 1,
@@ -426,11 +445,6 @@ const styles = StyleSheet.create({
     color: COLORS.gray400,
     marginTop: 2,
   },
-  chevron: {
-    fontSize: 20,
-    color: COLORS.gray300,
-    fontWeight: '300',
-  },
 
   // Divider
   divider: {
@@ -444,15 +458,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FEF2F2',
-    borderRadius: 14,
-    paddingVertical: 15,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: '#FECACA',
+    marginVertical: 10,
   },
   logoutIcon: {
-    fontSize: 18,
     marginRight: 8,
   },
   logoutText: {

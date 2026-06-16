@@ -117,10 +117,12 @@ const SavedJobCard = ({
   job,
   onRemove,
   onApply,
+  onJobDetails,
 }: {
   job: SavedJob;
   onRemove: (id: string) => void;
   onApply: (job: SavedJob) => void;
+  onJobDetails: (job: SavedJob) => void;
 }) => {
   const removeScale = useRef(new Animated.Value(1)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
@@ -144,11 +146,10 @@ const SavedJobCard = ({
   };
 
   return (
-    <Animated.View
-      style={[
-        styles.jobCard,
-        { opacity: fadeAnim, transform: [{ scale: removeScale }] },
-      ]}
+    <TouchableOpacity
+      activeOpacity={0.85}
+      style={[styles.jobCard]}
+      onPress={() => onJobDetails(job)}
     >
       {/* ── Card Header ── */}
       <View style={styles.cardHeader}>
@@ -202,7 +203,9 @@ const SavedJobCard = ({
           <View
             style={[
               styles.badgeDot,
-              job.workMode === 'Remote' && { backgroundColor: COLORS.success },
+              job.workMode === 'Remote' && {
+                backgroundColor: COLORS.success,
+              },
               job.workMode === 'On-site' && {
                 backgroundColor: COLORS.warning,
               },
@@ -280,7 +283,7 @@ const SavedJobCard = ({
           </LinearGradient>
         </TouchableOpacity>
       </View>
-    </Animated.View>
+    </TouchableOpacity>
   );
 };
 
@@ -360,7 +363,7 @@ const SaveJobScreen = () => {
   };
 
   const handleApply = (job: SavedJob) => {
-    navigation.navigate('ApplyJob', { job });
+    navigation.navigate('ApplyJob', { job, fromSaveJob: true });
   };
 
   const handleClearAll = () => {
@@ -370,6 +373,10 @@ const SaveJobScreen = () => {
       text1: 'All Jobs Cleared',
       text2: 'Your saved jobs list has been cleared.',
     });
+  };
+
+  const handleJobDetails = (job: SavedJob) => {
+    navigation.navigate('JobDetailsScreen', { fromSaveJob: true });
   };
 
   const handleBrowse = () => {
@@ -440,6 +447,7 @@ const SaveJobScreen = () => {
                 job={job}
                 onRemove={handleRemove}
                 onApply={handleApply}
+                onJobDetails={handleJobDetails}
               />
             ))}
 

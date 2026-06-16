@@ -3,6 +3,7 @@ import React from 'react';
 import { FONT_FAMILY, FONT_SIZE } from '../../../../constants/fonts';
 import COLORS from '../../../../constants/colors';
 import { SectionHeader } from './SectionHeader';
+import { useNavigation } from '@react-navigation/native';
 const RECOMMENDED_JOBS = [
   {
     id: '1',
@@ -26,8 +27,18 @@ const RECOMMENDED_JOBS = [
   },
 ];
 
-const RecommendedCard = ({ item }: { item: (typeof RECOMMENDED_JOBS)[0] }) => (
-  <TouchableOpacity style={styles.recommendCard} activeOpacity={0.8}>
+const RecommendedCard = ({
+  item,
+  handlePress,
+}: {
+  item: (typeof RECOMMENDED_JOBS)[0];
+  handlePress: () => void;
+}) => (
+  <TouchableOpacity
+    style={styles.recommendCard}
+    activeOpacity={0.8}
+    onPress={handlePress}
+  >
     <View style={styles.recommendLeft}>
       <View style={styles.recommendLogo}>
         <Text style={styles.recommendLogoText}>{item.title.charAt(0)}</Text>
@@ -60,11 +71,20 @@ const RecommendedCard = ({ item }: { item: (typeof RECOMMENDED_JOBS)[0] }) => (
 );
 
 const RecommendedJobs = () => {
+  const navigation = useNavigation<any>();
+
+  const handlePress = () => {
+    navigation.navigate('JobsStack', {
+      screen: 'JobDetailsScreen',
+      params: { fromSaveJob: false },
+    });
+  };
+
   return (
     <View>
       <SectionHeader title="Recommended for You" actionLabel="Customize" />
       {RECOMMENDED_JOBS.map(item => (
-        <RecommendedCard key={item.id} item={item} />
+        <RecommendedCard key={item.id} item={item} handlePress={handlePress} />
       ))}
     </View>
   );

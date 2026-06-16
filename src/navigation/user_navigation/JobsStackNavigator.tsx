@@ -6,8 +6,8 @@ import ApplicationSubmitScreen from '../../screens/user/Jobs/ApplicationSubmitSc
 import SaveJobScreen from '../../screens/user/Jobs/SaveJobScreen';
 
 export type JobsStackParamList = {
-  JobDetailsScreen: undefined;
-  ApplyJob: { job?: any };
+  JobDetailsScreen: { fromSaveJob?: boolean };
+  ApplyJob: { job?: any; fromJobDetails?: boolean; fromSaveJob?: boolean };
   ApplicationSubmit: undefined;
   SaveJob: undefined;
 };

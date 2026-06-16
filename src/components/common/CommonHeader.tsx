@@ -442,7 +442,7 @@ const styles = StyleSheet.create({
   },
   centerZone: {
     flex: 1,
-    marginHorizontal: 6,
+    // marginHorizontal: 6,
     justifyContent: 'center',
   },
   rightZone: {
@@ -472,7 +472,7 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY.PSemiBold,
     fontSize: FONT_SIZE.lg,
     color: COLORS.gray800,
-    letterSpacing: -0.3,
+    // letterSpacing: -0.3,
   },
 
   /* ── Search pill ── */
